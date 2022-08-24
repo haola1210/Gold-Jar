@@ -4,6 +4,10 @@ module.exports = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    'outline-pink-300',
+    'outline-green-300',
+  ],
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {

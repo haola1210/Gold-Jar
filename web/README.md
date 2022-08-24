@@ -28,3 +28,6 @@ config:
         "@typescript-eslint/no-explicit-any": "error"
     }
 ```
+
+bug about tailwind:
+https://stackoverflow.com/questions/73469632/the-tailwindcss-outline-is-not-working-did-i-do-something-wrong/73472505#73472505
