@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as dayjs from 'dayjs';
 import { 
   ChevronDoubleLeftIcon,
@@ -25,17 +25,29 @@ const legend = {
 const today = dayjs();
 
 export interface ICalendar {
-  value?: dayjs.Dayjs,
   onChange?: (_value: dayjs.Dayjs | null) => void
 }
 
-function Calendar({ value, onChange } : ICalendar) {
+/**
+ * We just need to get the selected date from this component
+ * 
+ * We don't need to update the selected date of this component from outside
+ * 
+ * Because by default when open app, the selected date is today.
+ * 
+ * So we should memo this component.
+ */
+function Calendar({ onChange } : ICalendar) {
   
   const [day, setDay] = useState(() => dayjs());
   const [selectedDate, selectDate] = useState<dayjs.Dayjs | null>(
-    value || (() => day)
+    () => day
   );
   
+  useEffect(() => {
+    onChange?.(selectedDate);
+  }, [selectedDate]);
+
   // 
   const thisYear = day.year();
   const thisMonth = day.month(); // (January as 0, December as 11)
@@ -78,12 +90,13 @@ function Calendar({ value, onChange } : ICalendar) {
     }
     
     // selected before -> unselect
-    if(selectedDate && dateObject.isSame(selectedDate)) {
+    // console.log(selectedDate, dateObject, dateObject.isSame(selectedDate, 'date'));
+    if(selectedDate && dateObject.isSame(selectedDate, 'date')) {
       selectDate(null);
-      onChange?.(null);
+      // onChange?.(null);
     } else {
       selectDate(dateObject);
-      onChange?.(dateObject);
+      // onChange?.(dateObject);
     }
   };
 
@@ -252,4 +265,4 @@ function Calendar({ value, onChange } : ICalendar) {
   );
 }
 
-export default Calendar;
+export default React.memo(Calendar);
