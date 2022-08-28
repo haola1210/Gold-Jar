@@ -21,10 +21,23 @@
     ],
     "rules": {
         "semi": "error",
-        "no-unused-vars": "error",
-        "indent": [
-            "error",
-            2
+        "no-unused-vars": [
+            "error", {
+                "argsIgnorePattern": "^_"
+            }
+        ],
+        "curly": "error",
+        "eqeqeq": "error",
+        "camelcase": "warn",
+        "indent": "off",
+        "@typescript-eslint/indent": [
+            "error", 
+            2,
+            /*
+             without this, it will conflict with the 'max-len'
+             refer this: https://stackoverflow.com/questions/52178093/ignore-the-indentation-in-a-template-literal-with-the-eslint-indent-rule
+            */
+            { "ignoredNodes": ["TemplateLiteral > *"] }
         ],
         "linebreak-style": [
             "error",
@@ -34,6 +47,7 @@
             "error",
             "single"
         ],
-        "@typescript-eslint/no-explicit-any": "error"
+        "@typescript-eslint/no-explicit-any": "error",
+        "max-len": ["error", { "code": 100 }]
     }
 }

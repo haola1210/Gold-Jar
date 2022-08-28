@@ -8,7 +8,7 @@ config for cleaner importing: https://dev.to/theodorusclarence/clean-up-your-imp
 
 init eslint: https://eslint.org/docs/latest/user-guide/getting-started
 
-config:
+basic config:
 ```json
 "rules": {
         "semi": "error",
@@ -28,6 +28,8 @@ config:
         "@typescript-eslint/no-explicit-any": "error"
     }
 ```
+
+detail in `eslintrc.config`
 
 bug about tailwind:
 https://stackoverflow.com/questions/73469632/the-tailwindcss-outline-is-not-working-did-i-do-something-wrong/73472505#73472505

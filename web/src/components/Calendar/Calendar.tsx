@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import * as dayjs from 'dayjs';
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/outline';
+import { 
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon 
+} from '@heroicons/react/outline';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -19,14 +22,19 @@ const legend = {
     title: 'Ngày đang chọn'
   }
 };
+const today = dayjs();
 
-function Calendar() {
+export interface ICalendar {
+  value?: dayjs.Dayjs,
+  onChange?: (_value: dayjs.Dayjs | null) => void
+}
+
+function Calendar({ value, onChange } : ICalendar) {
   
   const [day, setDay] = useState(() => dayjs());
-  const today = dayjs();
-
-  const [selectedDate, selectDate] = useState<dayjs.Dayjs | null>(() => day);
-
+  const [selectedDate, selectDate] = useState<dayjs.Dayjs | null>(
+    value || (() => day)
+  );
   
   // 
   const thisYear = day.year();
@@ -72,8 +80,10 @@ function Calendar() {
     // selected before -> unselect
     if(selectedDate && dateObject.isSame(selectedDate)) {
       selectDate(null);
+      onChange?.(null);
     } else {
       selectDate(dateObject);
+      onChange?.(dateObject);
     }
   };
 
@@ -88,8 +98,14 @@ function Calendar() {
         >
           <ChevronDoubleLeftIcon className='w-4 h-4 m-1.5 text-blue-500' />
         </button>
-        <p className="flex-grow text-center text-sm font-semibold mx-4 py-1 bg-orange-200 rounded-md">
-          { selectedDate ? selectedDate.format('DD MMM YYYY') : day.format('MMM YYYY') }
+        <p 
+          className="flex-grow text-center text-sm \
+            font-semibold mx-4 py-1 bg-orange-200 rounded-md"
+        >
+          { 
+            selectedDate ? 
+              selectedDate.format('DD MMM YYYY') : day.format('MMM YYYY') 
+          }
         </p>
         <button 
           className='border-blue-400 border-2 rounded-full'
@@ -132,7 +148,12 @@ function Calendar() {
                   className={
                     `
                       w-full text-center bg-slate-100 h-12 p-1 flex flex-col
-                      ${shalowCompareArray([selectedDate?.date(), selectedDate?.month(), selectedDate?.year()], [thisDay.date(), thisDay.month(), thisDay.year()]) ? 'bg-green-100' : ''}
+                      ${
+                        shalowCompareArray(
+                          [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
+                          [thisDay.date(), thisDay.month(), thisDay.year()]
+                        ) ? 'bg-green-100' : ''
+                      }
                     `
                   }
                   onClick={() => handleSelectDate(thisDay.date(), thisMonth)}
@@ -156,8 +177,18 @@ function Calendar() {
                 className={
                   `
                     w-full text-center h-12 p-1 flex flex-col
-                    ${shalowCompareArray([today.date(), today.month(), today.year()], [i+1, thisMonth, thisYear]) ? 'bg-pink-100' : ''}
-                    ${shalowCompareArray([selectedDate?.date(), selectedDate?.month(), selectedDate?.year()], [i+1, thisMonth, thisYear]) ? '!bg-green-100' : ''}
+                    ${
+                      shalowCompareArray(
+                        [today.date(), today.month(), today.year()],
+                        [i+1, thisMonth, thisYear]
+                      ) ? 'bg-pink-100' : ''
+                    }
+                    ${
+                      shalowCompareArray(
+                        [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
+                        [i+1, thisMonth, thisYear]
+                      ) ? '!bg-green-100' : ''
+                    }
                   `
                 }
                 onClick={() => handleSelectDate(i+1, thisMonth+1)}
@@ -180,7 +211,12 @@ function Calendar() {
                   className={
                     `
                       w-full text-center bg-slate-100 h-12 p-1 flex flex-col
-                      ${shalowCompareArray([selectedDate?.date(), selectedDate?.month(), selectedDate?.year()], [thisDay.date(), thisDay.month(), thisDay.year()]) ? 'bg-green-100' : ''}
+                      ${
+                        shalowCompareArray(
+                          [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
+                          [thisDay.date(), thisDay.month(), thisDay.year()]
+                        ) ? 'bg-green-100' : ''
+                      }
                     `
                   }
                   onClick={() => handleSelectDate(thisDay.date(), thisMonth+2)}
