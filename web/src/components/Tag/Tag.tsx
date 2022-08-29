@@ -14,10 +14,11 @@ function Tag({ title, className, id, onClick, active, activeColor, outlineColor 
   return (
     <span 
       className={`
-        ${className} rounded-md p-2 font-medium text-sm inline-block m-1
+        ${className} rounded-md p-2 font-medium text-sm 
+        inline-block text-center text-gray-800 shadow-md
         ${
           active ? 
-          `${activeColor} outline outline-offset-2 ${outlineColor} text-white` : ''
+          `${activeColor} outline outline-offset-2 ${outlineColor} !text-white` : ''
         }
       `}
       onClick={() => id && onClick?.(id)}

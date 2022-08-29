@@ -257,7 +257,7 @@ function Calendar({ onChange } : ICalendar) {
                 outline outline-${legend[key as keyof typeof legend].color.replace('1', '3')}
               `
             } />
-            <p className='px-2'>{legend[key as keyof typeof legend].title.replace('1', '3')}</p>
+            <p className='pl-2'>{legend[key as keyof typeof legend].title.replace('1', '3')}</p>
           </div>
         ))}
       </div>
