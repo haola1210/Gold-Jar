@@ -1,12 +1,16 @@
+/* eslint-disable max-len */
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
     'outline-pink-300',
     'outline-green-300',
+    'bg-cyan-600',
+    'bg-cyan-400'
   ],
   presets: [],
   darkMode: 'media', // or 'class'
@@ -728,7 +732,7 @@ module.exports = {
       8: '8px',
     },
     ringColor: ({ theme }) => ({
-      DEFAULT: theme(`colors.blue.500`, '#3b82f6'),
+      DEFAULT: theme('colors.blue.500', '#3b82f6'),
       ...theme('colors'),
     }),
     ringOffsetColor: ({ theme }) => theme('colors'),
@@ -958,4 +962,4 @@ module.exports = {
     'disabled',
   ],
   plugins: [],
-}
+};

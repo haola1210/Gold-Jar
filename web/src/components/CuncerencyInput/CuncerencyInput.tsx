@@ -42,7 +42,11 @@ function CuncerencyInput({ value, disabled, className, onChange }: ICuncerencyIn
 
   // whenever `value` props change, update `inpValue` state.
   useEffect(() => {
-    if (value !== undefined && value !== inpValue && (/[0-9]+$/.test(value) || value === '')) {
+    if (
+      value !== undefined && 
+      value !== inpValue && 
+      (NumberOnlyPattern.test(value) || value === '')
+    ) {
       setInpValue(value);
       console.log('re-set value', value, inpValue);
     }
