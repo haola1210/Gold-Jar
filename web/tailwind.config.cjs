@@ -10,7 +10,10 @@ module.exports = {
     'outline-pink-300',
     'outline-green-300',
     'bg-cyan-600',
-    'bg-cyan-400'
+    'bg-cyan-400',
+    {
+      pattern: /grid-cols-*/,
+    },
   ],
   presets: [],
   darkMode: 'media', // or 'class'
