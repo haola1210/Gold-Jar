@@ -5,10 +5,12 @@
  * activeColor: tailwind color (color + 200)
  * outlineColor: tailwind color ({color}-400)
  */
+import type { SpendingTag } from '@types';
+import { SpendingTagId } from '@types';
 
-export const spendingList = [
+export const spendingList: SpendingTag[] = [
   {
-    id: 1,
+    id: SpendingTagId.EXPENSE,
     title: 'CHI TIÊU',
     description: 'Các chi trả cho các nhu cầu thiết yếu, sinh hoạt hàng ngày của cuộc sống.',
     color: 'bg-red-400',
@@ -16,7 +18,7 @@ export const spendingList = [
     outlineColor: 'outline-red-400'
   },
   {
-    id: 2,
+    id: SpendingTagId.SAVING,
     title: 'TIẾT KIỆM',
     // eslint-disable-next-line max-len
     description: 'Tiết kiệm cho những mục tiêu dài hạn, lớn hạn như mua xe, mua nhà, sinh em bé, thực hiện ước mơ...',
@@ -25,7 +27,7 @@ export const spendingList = [
     outlineColor: 'outline-yellow-400'
   },
   {
-    id: 3,
+    id: SpendingTagId.EDUCATION,
     title: 'GIÁO DỤC',
     // eslint-disable-next-line max-len
     description: 'Dành tiền cho việc học thêm, trau dồi kiển thức của bạn thân, mua sách, tham gia các khóa học, đào tạo...',
@@ -34,7 +36,7 @@ export const spendingList = [
     outlineColor: 'outline-teal-400'
   },
   {
-    id: 4,
+    id: SpendingTagId.ENJOYMENT,
     title: 'HƯỞNG THỤ',
     // eslint-disable-next-line max-len
     description: 'Khoản tiền dành cho việc hưởng thụ, mua sắm xa xỉ, chăm lo cho bản thân, làm những việc mới mẻ, tăng cường trải nghiệm...',
@@ -43,7 +45,7 @@ export const spendingList = [
     outlineColor: 'outline-violet-400'
   },
   {
-    id: 5,
+    id: SpendingTagId.INVESTMENT,
     title: 'ĐẦU TƯ',
     // eslint-disable-next-line max-len
     description: 'Hãy đầu tư để tạo ra thu nhập thụ động như gửi tiết kiệm, đầu tư chứng khoán hay bất động sản, góp vốn kinh doanh...',
@@ -52,7 +54,7 @@ export const spendingList = [
     outlineColor: 'outline-green-400'
   },
   {
-    id: 6,
+    id: SpendingTagId.DONATION,
     title: 'TỪ THIỆN',
     // eslint-disable-next-line max-len
     description: 'Khoản tiền bạn sử dụng để làm từ thiện, giúp đỡ cộng đồng, người thân, bạn bè những hoàn cảnh khó khăn...',

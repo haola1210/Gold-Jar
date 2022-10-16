@@ -1,16 +1,16 @@
-import React, { memo } from 'react';
+import React from 'react';
+import { IncomeTag, SpendingTag } from '@types';
 
 export interface ITag {
-  title: string
-  active?: boolean
+  tag: IncomeTag | SpendingTag
+  active: boolean
   className?: string
-  id?: number
-  onClick?: (_id: number) => void
-  activeColor?: string
-  outlineColor?: string
+  onClick: (_tag: ITag['tag']) => void
 }
 
-function Tag({ title, className, id, onClick, active, activeColor, outlineColor } : ITag) {
+function Tag({ className, onClick, active, tag } : ITag) {
+  const { title, activeColor, outlineColor } = tag;
+
   return (
     <span 
       className={`
@@ -21,11 +21,11 @@ function Tag({ title, className, id, onClick, active, activeColor, outlineColor 
           `${activeColor} outline outline-offset-2 ${outlineColor} !text-white` : ''
         }
       `}
-      onClick={() => id && onClick?.(id)}
+      onClick={() => onClick(tag)}
     >
       {title}
     </span>
   );
 }
 
-export default memo(Tag);
+export default Tag;

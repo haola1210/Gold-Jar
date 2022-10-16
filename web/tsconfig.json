@@ -22,8 +22,10 @@
       "@hooks": ["./hooks/"],
       "@utils/*": ["./utils/*"],
       "@contexts/*": ["./contexts/*"],
+      "@consts": ["./consts/"],
       "@routes" : ["./routes/"],
       "@assets" : ["./assets/"],
+      "@types" : ["./types/"],
       "@/*" : ["./*"]
     }
   },
