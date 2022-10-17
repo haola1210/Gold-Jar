@@ -69,8 +69,10 @@ function Calendar({ onChange } : ICalendar) {
   const handleChangeMonth = (type: 'NEXT' | 'BACK') => {
     if(type === 'NEXT') {
       setDay(day.add(1, 'month'));
+      selectDate(null);
     } else if (type === 'BACK') {
       setDay(day.subtract(1, 'month'));
+      selectDate(null);
     }
   };
 
