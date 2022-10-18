@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { range } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
+import CalendarHeader from './CalendarHeader';
 
 const weekDays = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
@@ -132,13 +133,7 @@ function Calendar({ onChange } : ICalendar) {
 
       <div className="w-full font-medium">
         {/* calendar week days */}
-        <div className='w-full flex border-b-2 '>
-          {
-            weekDays.map(wD => (
-              <div key={wD} className=' flex-grow text-center'>{ wD }</div>
-            ))
-          }
-        </div>
+        <CalendarHeader weekDays={weekDays} />
 
         {/* calendar days */}
         <div 

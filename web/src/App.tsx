@@ -1,15 +1,9 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-
-import Root from '@pages/Root';
-import Main from '@pages/Main';
+import RoutesContainer from '@routes';
 
 function App() {
   return (
-    <Routes>
-      <Route path='/:type' element={<Main />}/>
-      <Route path='/' element={<Root />}/>
-    </Routes>
+    <RoutesContainer />
   );
 }
 
