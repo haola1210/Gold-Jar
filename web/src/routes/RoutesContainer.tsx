@@ -1,3 +1,4 @@
+import Layout from '@components/Layout';
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -23,12 +24,14 @@ const Pages = pages.reduce((P: Pages, p) => {
  */
 function RoutesContainer() {
   return (
-    <Suspense fallback={<div>loading...</div>}>
-      <Routes>
-        <Route path='/:type' element={<Pages.Main />}/>
-        <Route path='/' element={<Pages.Root />}/>
-      </Routes>
-    </Suspense>
+    <Layout>
+      <Suspense fallback={<div>loading...</div>}>
+        <Routes>
+          <Route path='/:type' element={<Pages.Main />}/>
+          <Route path='/' element={<Pages.Root />}/>
+        </Routes>
+      </Suspense>
+    </Layout>
   );
 }
 
