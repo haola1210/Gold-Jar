@@ -6,45 +6,60 @@
  * Modal will give it child the given control props
  */
 
-import React, { Attributes, cloneElement, isValidElement, ReactElement } from 'react';
+import React, { 
+  createContext, forwardRef, 
+  ReactNode, useContext, useImperativeHandle, useReducer 
+} from 'react';
 import { createPortal } from 'react-dom';
 
 interface IModal {
   domNode: HTMLElement
-  children: ReactElement
-  isOpen: boolean
-  toggle: () => void
+  component: ReactNode
+  isOpenByDefault?: boolean
   /**
    * onClose
    * onOpen
    */
 }
 
-type InjectedProps = Pick<IModal, 'isOpen' | 'toggle'>
+type InjectedProps = { isOpen: boolean, toggle: (_v?: boolean) => void }
+export type WithModalProps = InjectedProps;
+
+export type ModalRef = { toggleModal: InjectedProps['toggle'] };
+
+const ModalContext = createContext<undefined | WithModalProps>(undefined);
+
+export const useModalContext = () => useContext(ModalContext);
+
+const Modal = forwardRef<ModalRef, IModal>(
+  ({ domNode, component, isOpenByDefault = false }: IModal, ref) => {
+
+    const [shouldOpenSideBar, toggle] = useReducer(
+      (prev, v?: boolean) => v !== undefined ? v : !prev
+      ,isOpenByDefault
+    );
 
 
-const Modal = ({ domNode, children, isOpen, toggle }: IModal) => {
 
-  const wrapper = () => {
-    return isValidElement(children) ?
-      cloneElement<Partial<unknown> & Attributes & InjectedProps>(children as ReactElement, {
-        isOpen,
-        toggle
-      }) :
-      children;
-  };
+    useImperativeHandle(ref, () => ({
+      toggleModal: toggle
+    }), []);
 
-  return (
-    <>
-      {
-        isOpen &&
-        createPortal(
-          <div>{wrapper()}</div>,
-          domNode
-        )
-      }
-    </>
-  );
-};
+    return (
+      <>
+        {
+          shouldOpenSideBar &&
+          createPortal(
+            <>
+              <ModalContext.Provider value={{ isOpen: shouldOpenSideBar, toggle }}>
+                {component}
+              </ModalContext.Provider>
+            </>,
+            domNode
+          )
+        }
+      </>
+    );
+  });
 
 export default Modal;

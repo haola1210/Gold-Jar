@@ -9,5 +9,10 @@ body {
 }
 
 #root{
-  @apply h-full w-full;
+  @apply h-full w-full relative;
+
+}
+
+#header-menu {
+  @apply absolute top-0 left-0;
 }
