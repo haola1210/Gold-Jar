@@ -18,7 +18,7 @@ export default defineConfig({
       '@consts': path.resolve(__dirname, './src/consts'),
       '@routes' : path.resolve(__dirname, './src/routes'),
       '@assets' : path.resolve(__dirname, './src/assets'),
-      '@types' : path.resolve(__dirname, './src/types'),
+      '@interfaces' : path.resolve(__dirname, './src/interfaces'),
       '@': path.resolve(__dirname, './src')
     }
   },

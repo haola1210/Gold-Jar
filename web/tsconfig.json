@@ -19,14 +19,13 @@
     "paths": {
       "@pages/*": ["./pages/*"],
       "@components/*": ["./components/*"],
-      "@hooks": ["./hooks/"],
+      "@hooks/*": ["./hooks/*"],
       "@utils/*": ["./utils/*"],
       "@contexts/*": ["./contexts/*"],
-      "@consts": ["./consts/"],
-      "@routes" : ["./routes/"],
-      "@assets" : ["./assets/"],
-      "@types" : ["./types/"],
-      "@/*" : ["./*"]
+      "@consts/*": ["./consts/*"],
+      "@routes/*" : ["./routes/*"],
+      "@assets/*" : ["./assets/*"],
+      "@interfaces/*" : ["./interfaces/*"],
     }
   },
   "include": ["src"],

@@ -1,9 +1,10 @@
 import React from 'react';
-import { ActionType, IncomeTag, SpendingTag } from '@types';
+import { ActionType } from '@interfaces/action.type';
+import { type IncomeTag, type SpendingTag } from '@interfaces/tag.type';
 
 export interface IMoneyTypeBadge {
-  tag: IncomeTag | SpendingTag
-  type: ActionType
+  tag: IncomeTag | SpendingTag;
+  type: ActionType;
 }
 
 const mapper = {

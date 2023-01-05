@@ -1,10 +1,8 @@
 import React from 'react';
-import RoutesContainer from '@routes';
+import RoutesContainer from '@routes/RoutesContainer';
 
 function App() {
-  return (
-    <RoutesContainer />
-  );
+  return <RoutesContainer />;
 }
 
 export default App;

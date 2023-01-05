@@ -1,24 +1,21 @@
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 import Header from './Header';
 
 interface ILayout extends HTMLAttributes<HTMLDivElement> {
-  children: JSX.Element
+  children: JSX.Element;
 }
 
 function Layout({ children, className, ...rest }: ILayout) {
-
   return (
-    <div 
-      className={'w-full h-full flex flex-col ' + className || ''}
+    <div
+      className={`w-full h-full flex flex-col${className ? ' ' + className : ''}`}
       {...rest}
     >
       <div>
         <Header />
       </div>
-      
-      <div className='flex-grow overflow-y-scroll '>
-        { children }
-      </div>
+
+      <div className='flex-grow overflow-y-scroll '>{children}</div>
     </div>
   );
 }

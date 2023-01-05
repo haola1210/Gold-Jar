@@ -8,7 +8,7 @@ export type Tag<T> = {
   color: string;
   activeColor: string;
   outlineColor: string;
-}
+};
 
 export const enum SpendingTagId {
   EXPENSE = 'EXPENSE',
@@ -27,7 +27,7 @@ export const enum IncomeTagId {
   LOTERY = 'LOTERY',
 }
 
-export type SpendingTag = Tag<SpendingTagId>
-export type IncomeTag = Tag<IncomeTagId>
+export type SpendingTag = Tag<SpendingTagId>;
+export type IncomeTag = Tag<IncomeTagId>;
 
 //#endregion
