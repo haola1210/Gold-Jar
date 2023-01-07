@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import type { IncomeTag } from '@interfaces/tag.type';
 import { IncomeTagId } from '@interfaces/tag.type';
 
@@ -15,7 +14,7 @@ export const incomeList: IncomeTag[] = [
   {
     id: IncomeTagId.SUB_JOB,
     title: 'NGHỀ TAY TRÁI',
-    // eslint-disable-next-line max-len
+
     description:
       'Nguồn tiền từ các công việc khác ngoài công việc chính. "Chỉ có lao động mới đem lại giá trị thặng dư"',
     color: 'bg-yellow-400',
@@ -25,7 +24,7 @@ export const incomeList: IncomeTag[] = [
   {
     id: IncomeTagId.PARENT,
     title: 'BU TA CHI',
-    // eslint-disable-next-line max-len
+
     description: 'Bu = Bố, Ta = Tui, Chi = Cho :) \n Lâu lâu được cho tiền thiệc là zui xướng',
     color: 'bg-teal-400',
     activeColor: 'bg-teal-600',
@@ -34,7 +33,7 @@ export const incomeList: IncomeTag[] = [
   {
     id: IncomeTagId.UN_INVESTMENT,
     title: 'GIẢM ĐẦU TƯ',
-    // eslint-disable-next-line max-len
+
     description:
       'Bạn không nên rút tiền từ việc đầu tư mà nên tái đầu tư. Tuy nhiên đôi khi không thể tránh được!',
     color: 'bg-violet-400',
@@ -44,7 +43,7 @@ export const incomeList: IncomeTag[] = [
   {
     id: IncomeTagId.LOTERY,
     title: 'THẦN TÀI ĐẾN',
-    // eslint-disable-next-line max-len
+
     description:
       'Trúng số à? Xin chân thành chúc mừng bạn vì bạn sắp có nhiều a/e họ hàng xa. Hãy sử dụng tiền thông minh nhé!',
     color: 'bg-green-400',

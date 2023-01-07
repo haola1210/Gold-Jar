@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-
-//#region TagSelector
+// #region TagSelector
 export type Tag<T> = {
   id: T;
   title: string;
@@ -30,4 +28,4 @@ export const enum IncomeTagId {
 export type SpendingTag = Tag<SpendingTagId>;
 export type IncomeTag = Tag<IncomeTagId>;
 
-//#endregion
+// #endregion
