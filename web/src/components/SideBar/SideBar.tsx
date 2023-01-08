@@ -3,8 +3,11 @@ import { useModalContext } from '@components/Modal';
 import { NavLink } from 'react-router-dom';
 import BackArrowIcon from '@assets/BackArrowIcon';
 import AvatarIcon from '@assets/AvatarIcon';
+import { returnSessionOfDate } from './utils';
+import { navLinks } from '@consts/links';
 
-type MenuItem = { to: string; name: string };
+const navLinkBaseClass =
+  'rounded-md p-2 font-medium text-sm inline-block text-center text-black-800 shadow-md  bg-zinc-200 w-full';
 
 const SideBar = () => {
   const modalContext = useModalContext();
@@ -13,65 +16,29 @@ const SideBar = () => {
     modalContext?.toggle();
   };
 
-  const nav: MenuItem[] = [
-    {
-      to: 'income',
-      name: 'Quản lý thu',
-    },
-    {
-      to: 'spending',
-      name: 'Quản lý chi',
-    },
-  ];
-
   const renderNavItem = () => {
     return (
       <div className='flex flex-col gap-4 w-full'>
-        {nav.map((item: MenuItem, i) => (
+        {navLinks.map((item, i) => (
           <NavLink
             to={item.to}
-            style={({ isActive }) =>
-              isActive
-                ? {
-                    background: '#00ff6a78',
-                  }
-                : undefined
-            }
             key={i}
-            className='rounded-md p-2 font-medium text-sm inline-block text-center text-black-800 shadow-md  bg-zinc-200 w-full'
+            className={({ isActive }) =>
+              isActive ? navLinkBaseClass + ' bg-lime-400' : navLinkBaseClass
+            }
           >
-            {item.name}
+            {item.title}
           </NavLink>
         ))}
       </div>
     );
   };
 
-  const returnSessionOfDate = () => {
-    const date = new Date();
-    let session = '';
-    if (date.getHours() >= 6 && date.getHours() < 12) {
-      session = 'sáng';
-    } else if (date.getHours() >= 12 && date.getHours() < 18) {
-      session = 'chiều';
-    } else {
-      session = 'tối';
-    }
-
-    return session;
-  };
-
   return (
-    <div
-      className='h-screen w-screen flex'
-      onClick={closeModal}
-    >
+    <div className='h-screen w-screen flex'>
       {/* left (content) */}
-      <div
-        className='px-4 py-5 bg-orange-500 flex flex-col'
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className='mb-4'>
+      <div className='px-4 py-5 bg-orange-400 flex flex-col'>
+        <div className='mb-16'>
           <div className='flex gap-2 items-center'>
             <AvatarIcon style={{ width: 40, height: 40 }} />
             <span>Vo Van Hao</span>
@@ -88,6 +55,7 @@ const SideBar = () => {
       <div
         className='grow flex justify-end'
         style={{ backgroundColor: 'rgba(250, 250, 250, 0.4)' }}
+        onClick={closeModal}
       >
         <BackArrowIcon style={{ width: 40, height: 40 }} />
       </div>
