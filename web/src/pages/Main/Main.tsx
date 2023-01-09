@@ -11,11 +11,7 @@ import { type IncomeTag, type SpendingTag } from '@interfaces/tag.type';
 import { useParams } from 'react-router-dom';
 import { MoneyTypeBadge } from '@components/Badges';
 import { type ActionType } from '@interfaces/action.type';
-
-const links = [
-  { title: 'Sổ Thu', to: '/income' },
-  { title: 'Sổ Chi', to: '/spending' },
-];
+import { navLinks as links } from '@consts/links';
 
 function Main() {
   const [, selectDate] = useState<dayjs.Dayjs | undefined>();

@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { range } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
 import CalendarHeader from './CalendarHeader';
+import { useNavigate } from 'react-router-dom';
 
 const weekDays = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
@@ -37,6 +38,7 @@ export interface ICalendar {
 function Calendar({ onChange }: ICalendar) {
   const [day, setDay] = useState(() => dayjs());
   const [selectedDate, selectDate] = useState<dayjs.Dayjs | undefined>(() => day);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onChange?.(selectedDate);
@@ -88,12 +90,18 @@ function Calendar({ onChange }: ICalendar) {
     // Selected before -> unselect
     // console.log(selectedDate, dateObject, dateObject.isSame(selectedDate, 'date'));
     if (selectedDate && dateObject.isSame(selectedDate, 'date')) {
-      selectDate(undefined);
+      // eslint-disable-next-line capitalized-comments
+      // selectDate(undefined);
       // OnChange?.(null);
+      navigateDetail('12-10-2000');
     } else {
       selectDate(dateObject);
       // OnChange?.(dateObject);
     }
+  };
+
+  const navigateDetail = (date: string) => {
+    navigate(`/detail/${date}`);
   };
 
   return (
