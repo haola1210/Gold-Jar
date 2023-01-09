@@ -11,7 +11,7 @@ const Collapse = ({ accordion = false, children }: ICollapseProps) => {
   return (
     <div>
       <CollapseContext.Provider value={{ accordion, activeItem, setActiveItem }}>
-        <div className='flex flex-col gap-2 px-2'>{children}</div>
+        <div className='flex flex-col gap-6 px-2'>{children}</div>
       </CollapseContext.Provider>
     </div>
   );
