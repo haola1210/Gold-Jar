@@ -3,7 +3,7 @@ import { useState, type ReactNode } from 'react';
 import { useCollapseContext } from './CollapseContext';
 
 interface IPanelProps {
-  header?: string;
+  header?: ReactNode;
   panelKey: string | number;
   children: ReactNode;
   suffixActive?: ReactNode;
