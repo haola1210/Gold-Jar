@@ -9,7 +9,7 @@ function BarIcon({ className = '', ...rest }: React.ComponentProps<'svg'>) {
       viewBox='0 0 24 24'
       strokeWidth={1.5}
       stroke='currentColor'
-      className={'w-6 h-6 ' + className}
+      className={'w-8 h-8 ' + className}
       {...rest}
     >
       <path

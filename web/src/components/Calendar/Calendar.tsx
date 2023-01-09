@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import * as dayjs from 'dayjs';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/outline';
 import { v4 as uuidv4 } from 'uuid';
 
-import { range } from '@utils/range';
+import { rangeWithKey } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
 import CalendarHeader from './CalendarHeader';
 import { useNavigate } from 'react-router-dom';
@@ -45,9 +45,9 @@ function Calendar({ onChange }: ICalendar) {
   }, [selectedDate]);
 
   //
-  const thisYear = day.year();
-  const thisMonth = day.month(); // (January as 0, December as 11)
-  const daysInMonth = day.daysInMonth();
+  const thisYear = useMemo(() => day.year(), [day.year()]);
+  const thisMonth = useMemo(() => day.month(), [day.month()]); // (January as 0, December as 11)
+  const daysInMonth = useMemo(() => day.daysInMonth(), [day.daysInMonth()]);
 
   // First date in calendar and its day
   const firstDate = dayjs(`${thisYear}-${thisMonth + 1}-1`);
@@ -87,22 +87,32 @@ function Calendar({ onChange }: ICalendar) {
       dateObject = dayjs(`${thisYear}-${month}-${date}`);
     }
 
-    // Selected before -> unselect
+    // Selected before -> move to detail page
     // console.log(selectedDate, dateObject, dateObject.isSame(selectedDate, 'date'));
     if (selectedDate && dateObject.isSame(selectedDate, 'date')) {
-      // eslint-disable-next-line capitalized-comments
-      // selectDate(undefined);
-      // OnChange?.(null);
+      //
       navigateDetail('12-10-2000');
     } else {
       selectDate(dateObject);
-      // OnChange?.(dateObject);
     }
   };
 
-  const navigateDetail = (date: string) => {
+  const navigateDetail = useCallback((date: string) => {
     navigate(`/detail/${date}`);
-  };
+  }, []);
+
+  // optimized ranges
+  const datesInLastMonth = useMemo(() => {
+    return rangeWithKey(lastMonthDays)
+  }, [lastMonthDays]);
+
+  const datesInThisMonth = useMemo(() => {
+    return rangeWithKey(daysInMonth)
+  }, [daysInMonth]);
+
+  const datesInNextMonth = useMemo(() => {
+    return rangeWithKey(nextMonthDays)
+  }, [nextMonthDays]);
 
   return (
     <div className='w-full h-min px-0.5 pt-1 pb-3 shadow-md rounded-xl'>
@@ -143,11 +153,11 @@ function Calendar({ onChange }: ICalendar) {
             `}
         >
           {/* days of last month */}
-          {range(lastMonthDays).map((i) => {
-            const thisDay = firstDate.subtract(firstDay - i, 'day');
+          {datesInLastMonth.map(({ value, key }) => {
+            const thisDay = firstDate.subtract(firstDay - value, 'day');
             return (
               <div
-                key={uuidv4()}
+                key={key}
                 className={`
                       w-full text-center bg-slate-100 h-12 p-1 flex flex-col
                       ${
@@ -168,15 +178,15 @@ function Calendar({ onChange }: ICalendar) {
           })}
 
           {/* days of this month */}
-          {range(daysInMonth).map((i) => (
+          {datesInThisMonth.map(({ value, key }) => (
             <div
-              key={uuidv4()}
+              key={key}
               className={`
                     w-full text-center h-12 p-1 flex flex-col
                     ${
                       shalowCompareArray(
                         [today.date(), today.month(), today.year()],
-                        [i + 1, thisMonth, thisYear],
+                        [value + 1, thisMonth, thisYear],
                       )
                         ? 'bg-pink-100'
                         : ''
@@ -184,25 +194,25 @@ function Calendar({ onChange }: ICalendar) {
                     ${
                       shalowCompareArray(
                         [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
-                        [i + 1, thisMonth, thisYear],
+                        [value + 1, thisMonth, thisYear],
                       )
                         ? '!bg-green-100'
                         : ''
                     }
                   `}
-              onClick={() => handleSelectDate(i + 1, thisMonth + 1)}
+              onClick={() => handleSelectDate(value + 1, thisMonth + 1)}
             >
-              <div className=' h-4 leading-3 text-xs text-left'>{i + 1}</div>
+              <div className=' h-4 leading-3 text-xs text-left'>{value + 1}</div>
               <div className='flex-grow'></div>
             </div>
           ))}
 
           {/* days of next month */}
-          {range(nextMonthDays).map((i) => {
-            const thisDay = lastDate.add(i + 1, 'day');
+          {datesInNextMonth.map(({ value, key }) => {
+            const thisDay = lastDate.add(value + 1, 'day');
             return (
               <div
-                key={uuidv4()}
+                key={key}
                 className={`
                       w-full text-center bg-slate-100 h-12 p-1 flex flex-col
                       ${
