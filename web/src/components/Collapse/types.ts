@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import { type ActionType } from '@interfaces/action.type';
 
 export interface ICollapseProps {
   children: React.ReactNode;
@@ -18,4 +19,5 @@ export interface IPanelProps {
   suffixActive?: ReactNode;
   suffixInactive?: ReactNode;
   emptyChildren?: ReactNode;
+  type: ActionType;
 }

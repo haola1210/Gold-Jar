@@ -2,6 +2,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
 import { useState } from 'react';
 import { useCollapseContext } from './CollapseContext';
 import { type IPanelProps } from './types';
+import { paneHeaderlColorClass, paneBodylColorClass } from './conts';
 
 const Panel = ({
   header = '',
@@ -9,6 +10,7 @@ const Panel = ({
   suffixInactive = <ChevronUpIcon style={{ width: 20, height: 20 }} />,
   children,
   emptyChildren = <div>No data found</div>,
+  type,
   ...props
 }: IPanelProps) => {
   const [isShowChildren, setIsShowChildren] = useState(false);
@@ -38,9 +40,9 @@ const Panel = ({
     <div key={props.panelKey}>
       <div
         onClick={handleOnClick}
-        className={`bg-slate-100 border-solid border-2 flex rounded-t-lg border-slate-400 ${
+        className={`flex rounded-t-lg ${paneHeaderlColorClass[type]} ${
           isShowChildren ? 'active' : ''
-        }`}
+        } ${shouldRenderChildren() ? 'border-b-0' : 'rounded-b-lg'}`}
       >
         <div className='p-2'>{header}</div>
         <div className='ml-auto mr-2 my-auto'>
@@ -48,7 +50,7 @@ const Panel = ({
         </div>
       </div>
       {shouldRenderChildren() && (
-        <div className='border-solid border-2 flex rounded-b-lg border-slate-400 border-t-0 p-2'>
+        <div className={`flex rounded-b-lg p-2 ${paneBodylColorClass[type]}`}>
           {children ? children : emptyChildren}
         </div>
       )}
