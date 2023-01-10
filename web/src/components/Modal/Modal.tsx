@@ -9,27 +9,12 @@
 import React, {
   createContext,
   forwardRef,
-  type ReactNode,
   useContext,
   useImperativeHandle,
   useReducer,
 } from 'react';
 import { createPortal } from 'react-dom';
-
-interface IModal {
-  domNode: HTMLElement;
-  component: ReactNode;
-  isOpenByDefault?: boolean;
-  /**
-   * OnClose
-   * onOpen
-   */
-}
-
-type InjectedProps = { isOpen: boolean; toggle: (_v?: boolean) => void };
-export type WithModalProps = InjectedProps;
-
-export type ModalRef = { toggleModal: InjectedProps['toggle'] };
+import { type IModal, type ModalRef, type WithModalProps } from './types';
 
 const ModalContext = createContext<undefined | WithModalProps>(undefined);
 

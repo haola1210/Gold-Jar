@@ -1,37 +1,15 @@
 import React from 'react';
 import { useModalContext } from '@components/Modal';
-import { NavLink } from 'react-router-dom';
-import BackArrowIcon from '@assets/BackArrowIcon';
 import AvatarIcon from '@assets/AvatarIcon';
 import { returnSessionOfDate } from './utils';
 import { navLinks } from '@consts/links';
-
-const navLinkBaseClass =
-  'rounded-md p-2 font-medium text-sm inline-block text-center shadow-md w-full bg-gray-200 text-gray-600';
+import NavBar from '@components/NavBar';
 
 const SideBar = () => {
   const modalContext = useModalContext();
 
   const closeModal = () => {
     modalContext?.toggle();
-  };
-
-  const renderNavItem = () => {
-    return (
-      <div className='flex flex-col gap-4 w-full'>
-        {navLinks.map((item, i) => (
-          <NavLink
-            to={item.to}
-            key={i}
-            className={({ isActive }) =>
-              isActive ? navLinkBaseClass + ' !bg-lime-500 !text-gray-100' : navLinkBaseClass
-            }
-          >
-            {item.title}
-          </NavLink>
-        ))}
-      </div>
-    );
   };
 
   return (
@@ -46,22 +24,23 @@ const SideBar = () => {
             />
             <span className='font-bold text-lg text-gray-700'>Vo Van Hao</span>
           </div>
-          <div className='font-bold text-sm text-gray-400'>Chào buổi {returnSessionOfDate()}, bạn khoẻ hông ?</div>
+          <div className='font-bold text-sm text-gray-400'>
+            Chào buổi {returnSessionOfDate()}, bạn khoẻ hông ?
+          </div>
         </div>
 
-        {/* css cho dep xiu */}
-        {/* render nhung tab khac nek */}
-
-        {renderNavItem()}
+        <NavBar
+          links={navLinks}
+          row={false}
+          childClass='rounded-lg !p-2'
+        />
       </div>
       {/* right (mask) */}
       <div
         className='grow flex justify-end'
         style={{ backgroundColor: 'rgba(39, 39, 39, 0.549)' }}
         onClick={closeModal}
-      >
-        {/* <BackArrowIcon style={{ width: 40, height: 40 }} /> */}
-      </div>
+      ></div>
     </div>
   );
 };

@@ -1,8 +1,5 @@
 import React, { memo } from 'react';
-
-interface ICalendarHeader {
-  weekDays: string[];
-}
+import { type ICalendarHeader } from '../types';
 
 function CalendarHeader({ weekDays }: ICalendarHeader) {
   return (

@@ -1,1 +1,3 @@
-export { default, type WithModalProps, type ModalRef, useModalContext } from './Modal';
+export { default, useModalContext } from './Modal';
+
+export * from './types';

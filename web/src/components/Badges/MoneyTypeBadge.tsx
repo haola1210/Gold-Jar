@@ -1,16 +1,6 @@
 import React from 'react';
-import { ActionType } from '@interfaces/action.type';
-import { type IncomeTag, type SpendingTag } from '@interfaces/tag.type';
-
-export interface IMoneyTypeBadge {
-  tag: IncomeTag | SpendingTag;
-  type: ActionType;
-}
-
-const mapper = {
-  [ActionType.INCOME.toLocaleLowerCase()]: 'Thu',
-  [ActionType.SPENDING.toLocaleLowerCase()]: 'Chi',
-};
+import { type IMoneyTypeBadge } from './types';
+import { mapper } from './consts';
 
 const MoneyTypeBadge = ({ tag, type }: IMoneyTypeBadge) => {
   return (

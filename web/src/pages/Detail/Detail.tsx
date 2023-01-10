@@ -1,5 +1,4 @@
-import Collapse from '@components/Collapse';
-import Panel from '@components/Collapse/Panel';
+import Collapse, { Panel } from '@components/Collapse';
 import { useNavigate, useParams } from 'react-router-dom';
 import { mockdata } from './data.mock';
 

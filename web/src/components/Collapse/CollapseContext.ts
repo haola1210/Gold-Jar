@@ -1,10 +1,5 @@
 import { createContext, useContext } from 'react';
-
-export type CollapseContextProps = {
-  accordion: boolean;
-  activeItem: string | number | undefined;
-  setActiveItem: React.Dispatch<React.SetStateAction<string | number | undefined>>;
-};
+import { type CollapseContextProps } from './types';
 
 export const CollapseContext = createContext<undefined | CollapseContextProps>(undefined);
 

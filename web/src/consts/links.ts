@@ -1,4 +1,6 @@
+import { v4 as uuid } from 'uuid';
+
 export const navLinks = [
-  { title: 'Sổ Thu', to: '/income' },
-  { title: 'Sổ Chi', to: '/spending' },
+  { title: 'Sổ Thu', to: '/income', key: uuid() },
+  { title: 'Sổ Chi', to: '/spending', key: uuid() },
 ];

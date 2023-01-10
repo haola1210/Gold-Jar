@@ -1,23 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
-import { incomeList } from '@consts/income-list';
-import { spendingList } from '@consts/spending-list';
 import Tag from './Tag';
-import { type SpendingTag, type IncomeTag } from '@interfaces/tag.type';
 import { useLocation } from 'react-router-dom';
-import { ActionType } from '@interfaces/action.type';
-
-type TagType = SpendingTag | IncomeTag;
-
-export interface ITagSelector {
-  type: ActionType;
-  onSelectTag: (_tag: TagType | undefined) => void;
-  selectedTag: TagType | undefined;
-}
-
-const mapper = {
-  [ActionType.INCOME.toLowerCase()]: () => incomeList,
-  [ActionType.SPENDING.toLowerCase()]: () => spendingList,
-};
+import { type ITagSelector } from './types';
+import { mapper } from './consts';
 
 function TagSelector({ type, onSelectTag, selectedTag }: ITagSelector) {
   const tagList = useMemo(() => {

@@ -1,30 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import * as dayjs from 'dayjs';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/outline';
-import { v4 as uuidv4 } from 'uuid';
 
 import { rangeWithKey } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
-import CalendarHeader from './CalendarHeader';
+import CalendarHeader from './components/CalendarHeader';
 import { useNavigate } from 'react-router-dom';
+import { legend, weekDays } from './consts';
+import { type ICalendar } from './types';
+import DateCell from './components/DateCell';
 
-const weekDays = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
-
-const legend = {
-  today: {
-    color: 'pink-100',
-    title: 'Ngày hôm nay',
-  },
-  selected: {
-    color: 'green-100',
-    title: 'Ngày đang chọn',
-  },
-};
 const today = dayjs();
-
-export interface ICalendar {
-  onChange?: (_value: dayjs.Dayjs | undefined) => void;
-}
 
 /**
  * We just need to get the selected date from this component
@@ -101,17 +87,17 @@ function Calendar({ onChange }: ICalendar) {
     navigate(`/detail/${date}`);
   }, []);
 
-  // optimized ranges
+  // Optimized ranges
   const datesInLastMonth = useMemo(() => {
-    return rangeWithKey(lastMonthDays)
+    return rangeWithKey(lastMonthDays);
   }, [lastMonthDays]);
 
   const datesInThisMonth = useMemo(() => {
-    return rangeWithKey(daysInMonth)
+    return rangeWithKey(daysInMonth);
   }, [daysInMonth]);
 
   const datesInNextMonth = useMemo(() => {
-    return rangeWithKey(nextMonthDays)
+    return rangeWithKey(nextMonthDays);
   }, [nextMonthDays]);
 
   return (
@@ -156,79 +142,63 @@ function Calendar({ onChange }: ICalendar) {
           {datesInLastMonth.map(({ value, key }) => {
             const thisDay = firstDate.subtract(firstDay - value, 'day');
             return (
-              <div
+              <DateCell
                 key={key}
-                className={`
-                      w-full text-center bg-slate-100 h-12 p-1 flex flex-col
-                      ${
-                        shalowCompareArray(
-                          [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
-                          [thisDay.date(), thisDay.month(), thisDay.year()],
-                        )
-                          ? 'bg-green-100'
-                          : ''
-                      }
-                    `}
+                className={`${
+                  shalowCompareArray(
+                    [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
+                    [thisDay.date(), thisDay.month(), thisDay.year()],
+                  )
+                    ? 'bg-green-100'
+                    : ''
+                }`}
                 onClick={() => handleSelectDate(thisDay.date(), thisMonth)}
-              >
-                <div className=' h-4 leading-3 text-xs text-left '>{thisDay.date()}</div>
-                <div className='flex-grow'></div>
-              </div>
+                date={thisDay.date()}
+              />
             );
           })}
 
           {/* days of this month */}
           {datesInThisMonth.map(({ value, key }) => (
-            <div
+            <DateCell
               key={key}
-              className={`
-                    w-full text-center h-12 p-1 flex flex-col
-                    ${
-                      shalowCompareArray(
-                        [today.date(), today.month(), today.year()],
-                        [value + 1, thisMonth, thisYear],
-                      )
-                        ? 'bg-pink-100'
-                        : ''
-                    }
-                    ${
-                      shalowCompareArray(
-                        [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
-                        [value + 1, thisMonth, thisYear],
-                      )
-                        ? '!bg-green-100'
-                        : ''
-                    }
-                  `}
+              className={`${
+                shalowCompareArray(
+                  [today.date(), today.month(), today.year()],
+                  [value + 1, thisMonth, thisYear],
+                )
+                  ? 'bg-pink-100'
+                  : ''
+              } ${
+                shalowCompareArray(
+                  [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
+                  [value + 1, thisMonth, thisYear],
+                )
+                  ? '!bg-green-100'
+                  : ''
+              }`}
               onClick={() => handleSelectDate(value + 1, thisMonth + 1)}
-            >
-              <div className=' h-4 leading-3 text-xs text-left'>{value + 1}</div>
-              <div className='flex-grow'></div>
-            </div>
+              date={value + 1}
+            />
           ))}
 
           {/* days of next month */}
           {datesInNextMonth.map(({ value, key }) => {
             const thisDay = lastDate.add(value + 1, 'day');
             return (
-              <div
+              <DateCell
                 key={key}
-                className={`
-                      w-full text-center bg-slate-100 h-12 p-1 flex flex-col
-                      ${
-                        shalowCompareArray(
-                          [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
-                          [thisDay.date(), thisDay.month(), thisDay.year()],
-                        )
-                          ? 'bg-green-100'
-                          : ''
-                      }
-                    `}
+                className={`${
+                  shalowCompareArray(
+                    [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
+                    [thisDay.date(), thisDay.month(), thisDay.year()],
+                  )
+                    ? 'bg-green-100'
+                    : ''
+                }`}
                 onClick={() => handleSelectDate(thisDay.date(), thisMonth + 2)}
-              >
-                <div className=' h-4 leading-3 text-xs text-left'>{thisDay.date()}</div>
-                <div className='flex-grow'></div>
-              </div>
+                date={thisDay.date()}
+              />
             );
           })}
         </div>

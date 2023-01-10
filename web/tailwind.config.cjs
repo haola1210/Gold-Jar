@@ -10,6 +10,9 @@ module.exports = {
     {
       pattern: /grid-cols-*/,
     },
+    {
+      pattern: /grid-rows-*/,
+    },
   ],
   presets: [],
   darkMode: 'media', // Or 'class'

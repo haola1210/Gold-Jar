@@ -1,15 +1,7 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { useCollapseContext } from './CollapseContext';
-
-interface IPanelProps {
-  header?: ReactNode;
-  panelKey: string | number;
-  children: ReactNode;
-  suffixActive?: ReactNode;
-  suffixInactive?: ReactNode;
-  emptyChildren?: ReactNode;
-}
+import { type IPanelProps } from './types';
 
 const Panel = ({
   header = '',
@@ -34,7 +26,7 @@ const Panel = ({
     }
   };
 
-  const renderChildren = () => {
+  const shouldRenderChildren = () => {
     if (value?.accordion) {
       return value?.activeItem === props.panelKey;
     }
@@ -52,10 +44,10 @@ const Panel = ({
       >
         <div className='p-2'>{header}</div>
         <div className='ml-auto mr-2 my-auto'>
-          {renderChildren() ? suffixInactive : suffixActive}
+          {shouldRenderChildren() ? suffixInactive : suffixActive}
         </div>
       </div>
-      {renderChildren() && (
+      {shouldRenderChildren() && (
         <div className='border-solid border-2 flex rounded-b-lg border-slate-400 border-t-0 p-2'>
           {children ? children : emptyChildren}
         </div>

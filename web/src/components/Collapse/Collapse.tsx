@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { CollapseContext } from './CollapseContext';
-
-interface ICollapseProps {
-  children: React.ReactNode;
-  accordion?: boolean;
-}
+import { type ICollapseProps } from './types';
 
 const Collapse = ({ accordion = false, children }: ICollapseProps) => {
   const [activeItem, setActiveItem] = useState<string | number | undefined>(undefined);
