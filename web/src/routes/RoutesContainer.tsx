@@ -1,4 +1,3 @@
-import Layout from '@components/Layout';
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -11,7 +10,7 @@ type ILazyImport = Promise<{
  * Add new page here
  * then you can use it with <Pages.YourPage />
  */
-const pages = ['Main', 'Root', 'Detail'];
+const pages = ['Main', 'Root', 'Detail', 'Login'];
 
 const Pages = pages.reduce<IPages>((P: IPages, p) => {
   P[p] = lazy(async () => import(`@pages/${p}/index.ts`) as ILazyImport);
@@ -26,24 +25,26 @@ const Pages = pages.reduce<IPages>((P: IPages, p) => {
  */
 function RoutesContainer() {
   return (
-    <Layout>
-      <Suspense fallback={<div>loading...</div>}>
-        <Routes>
-          <Route
-            path='/detail/:date'
-            element={<Pages.Detail />}
-          />
-          <Route
-            path='/:type'
-            element={<Pages.Main />}
-          />
-          <Route
-            path='/'
-            element={<Pages.Root />}
-          />
-        </Routes>
-      </Suspense>
-    </Layout>
+    <Suspense fallback={<div>loading...</div>}>
+      <Routes>
+        <Route
+          path='/detail/:date'
+          element={<Pages.Detail />}
+        />
+        <Route
+          path='/:type'
+          element={<Pages.Main />}
+        />
+        <Route
+          path='/'
+          element={<Pages.Root />}
+        />
+        <Route
+          path='/login'
+          element={<Pages.Login />}
+        />
+      </Routes>
+    </Suspense>
   );
 }
 
