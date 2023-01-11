@@ -33,13 +33,13 @@ const Login = () => {
       <div className='p-6'>
         <span>Đăng Nhập</span>
         <InputWithError
-          label='Tên Đăng Nhập'
+          placeholder='Tên Đăng Nhập'
           name='username'
           onChange={handleChangeInput}
           errorMessage={formik.errors.username}
         />
         <InputWithError
-          label='password'
+          placeholder='Mật khẩu'
           type='password'
           name='password'
           onChange={handleChangeInput}
