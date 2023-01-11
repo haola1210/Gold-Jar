@@ -1,7 +1,12 @@
+import Layout from '@components/Layout';
 import React from 'react';
 
 function Root() {
-  return <div>hello</div>;
+  return (
+    <Layout>
+      <div>hello</div>
+    </Layout>
+  );
 }
 
 export default Root;
