@@ -33,7 +33,7 @@ const Select = ({ options, defaultValue, className, placeholder, onChange }: ISe
         className='flex border-2 relative h-7'
         onClick={() => setIsShowDropdown((prev) => !prev)}
       >
-        {label ? <span>{label}</span> : <span>{placeholder}</span>}
+        {label ? <span>{label}</span> : <span className='text-slate-400'>{placeholder}</span>}
         <span>
           <ChevronDownIcon
             style={{ width: 20, height: 20, top: 1, right: 2 }}
