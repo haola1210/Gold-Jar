@@ -25,11 +25,11 @@ const Input = ({ placeholder, type = 'text', name = '', onChange }: IInputProps)
   };
 
   return (
-    <div className='mt-2'>
+    <div className=''>
       <div className='relative'>
         <input
           className={`
-            block w-full border rounded-md px-2 py-1
+            block w-full border rounded-md px-4 py-2
           `}
           type={returnType()}
           name={name}
@@ -37,21 +37,21 @@ const Input = ({ placeholder, type = 'text', name = '', onChange }: IInputProps)
           placeholder={placeholder}
         />
         {type === 'password' && (
-          <span>
+          <>
             {isShowPassword ? (
               <EyeOffIcon
-                style={{ width: 20, height: 20, top: 8, right: 10 }}
+                style={{ width: 20, height: 20, top: 12, right: 10 }}
                 onClick={() => setIsShowPassword(false)}
                 className='absolute'
               />
             ) : (
               <EyeIcon
-                style={{ width: 20, height: 20, top: 8, right: 10 }}
+                style={{ width: 20, height: 20, top: 12, right: 10 }}
                 onClick={() => setIsShowPassword(true)}
                 className='absolute'
               />
             )}
-          </span>
+          </>
         )}
       </div>
     </div>

@@ -6,7 +6,7 @@ interface IH1Props {
 }
 
 const H1 = ({ children, className }: IH1Props) => {
-  return <h1 className={`my-4 text-3xl font-bold ${className ? className : ``}`}>{children}</h1>;
+  return <h1 className={`text-3xl font-bold ${className ? className : ``}`}>{children}</h1>;
 };
 
 export default H1;

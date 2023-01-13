@@ -11,3 +11,4 @@ tsconfig.node.json
 tsconfig.json
 vite.config.ts
 README.md
+*.d.ts

@@ -7,9 +7,9 @@ interface IInputWithErrorProps extends IInputProps {
 
 const InputWithError = ({ errorMessage, ...props }: IInputWithErrorProps) => {
   return (
-    <div className='h-14'>
+    <div className='mb-2'>
       <Input {...props} />
-      <div className='text-red-700 pl-2'>{errorMessage}</div>
+      <div className='text-red-700 text-sm pl-2'>{errorMessage ?? ''}&nbsp;</div>
     </div>
   );
 };

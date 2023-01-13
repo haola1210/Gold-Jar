@@ -31,9 +31,9 @@ const Login = () => {
 
   return (
     <LoginLayout>
-      <div className='p-6'>
+      <div className=''>
         <div>
-          <H1 className='text-cyan-600'>Đăng nhập</H1>
+          <H1 className='text-sky-400 pb-4'>Đăng nhập</H1>
         </div>
         <div>
           <InputWithError
@@ -53,10 +53,45 @@ const Login = () => {
           />
         </div>
       </div>
-      <Button onClick={formik.handleSubmit}>Đăng nhập</Button>
-      <div>Quên mật khẩu?</div>
-      <Button>Đăng nhập Bằng Facebook</Button>
-      <Button>Đăng nhập Bằng Google</Button>
+      <div className='flex justify-between items-end pb-16'>
+        <Button
+          style={{
+            width: '100px',
+          }}
+          className='text-gray bg-emerald-500 text-white text-base'
+          onClick={() => formik.handleSubmit()}
+        >
+          Đăng nhập
+        </Button>
+        <div className='text-md text-sky-300 font-semibold'>Quên mật khẩu?</div>
+      </div>
+      <hr className='w-80 m-auto py-2' />
+      <div className='flex gap-4'>
+        <Button
+          className='bg-emerald-500 text-white'
+          style={{
+            width: '100px',
+          }}
+        >
+          Đăng ký
+        </Button>
+        <Button
+          className='bg-cyan-500 text-white'
+          style={{
+            width: '100px',
+          }}
+        >
+          Facebook
+        </Button>
+        <Button
+          className='bg-red-500 text-white'
+          style={{
+            width: '100px',
+          }}
+        >
+          Google
+        </Button>
+      </div>
     </LoginLayout>
   );
 };

@@ -1,4 +1,5 @@
 import Button from '@components/Button';
+import H1 from '@components/H1';
 import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
 import { useFormik } from 'formik';
@@ -42,8 +43,8 @@ const Register = () => {
 
   return (
     <LoginLayout>
-      <div className='p-4'>
-        <div>Đăng ký</div>
+      <div className=''>
+        <H1 className='text-sky-400 pb-4'>Đăng ký</H1>
         <InputWithError
           placeholder='Tên'
           name='name'
@@ -82,11 +83,13 @@ const Register = () => {
           errorMessage={formik.errors.confirmPassword}
           onChange={onChangeForm}
         />
+      </div>
+      <div>
         <div>Đã có tài khoản</div>
         <div>
           Quay lại <b>Đăng nhập</b>
         </div>
-        <Button onClick={formik.handleSubmit}>Xác nhận</Button>
+        <Button onClick={() => formik.handleSubmit()}>Xác nhận</Button>
       </div>
     </LoginLayout>
   );
