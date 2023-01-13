@@ -9,7 +9,7 @@ const InputWithError = ({ errorMessage, ...props }: IInputWithErrorProps) => {
   return (
     <div className='h-14'>
       <Input {...props} />
-      <div className='text-red-700'>{errorMessage}</div>
+      <div className='text-red-700 pl-2'>{errorMessage}</div>
     </div>
   );
 };

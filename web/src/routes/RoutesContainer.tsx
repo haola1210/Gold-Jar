@@ -10,7 +10,16 @@ type ILazyImport = Promise<{
  * Add new page here
  * then you can use it with <Pages.YourPage />
  */
-const pages = ['Main', 'Root', 'Detail', 'Login', 'Register', 'Identify', 'RetrievalPassword'];
+const pages = [
+  'Main',
+  'Root',
+  'Detail',
+  'Login',
+  'Register',
+  'Identify',
+  'RetrievalPassword',
+  'Welcome',
+];
 
 const Pages = pages.reduce<IPages>((P: IPages, p) => {
   P[p] = lazy(async () => import(`@pages/${p}/index.ts`) as ILazyImport);
@@ -54,6 +63,10 @@ function RoutesContainer() {
         <Route
           path='/retrieval'
           element={<Pages.RetrievalPassword />}
+        />
+        <Route
+          path='/welcome'
+          element={<Pages.Welcome />}
         />
       </Routes>
     </Suspense>

@@ -1,9 +1,9 @@
 import Button from '@components/Button';
 import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
-import Modal, { type ModalRef } from '@components/Modal';
+import Modal, { useModalContext, type ModalRef } from '@components/Modal';
 import { useFormik } from 'formik';
-import { ChangeEvent, useRef } from 'react';
+import { type ChangeEvent, useRef } from 'react';
 import * as Yup from 'yup';
 
 const schema = Yup.object({
@@ -55,16 +55,24 @@ const Identify = () => {
 };
 
 const ShowNewPasswordModal = () => {
+  const modal = useModalContext();
   return (
     <div
       className='flex justify-center items-center w-screen h-screen'
       style={{ background: '#00000070' }}
+      onClick={() => modal?.toggle()}
     >
-      <div className='h-2/6 w-4/5 bg-white'>
+      <div
+        className='h-2/6 w-4/5 bg-white'
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className='text-center pb-5'>Mật khẩu mới</div>
         <div className='border-2 rounded-full text-center'>
           <span className='mr-4'>21312312312321</span>
           <span>Copy</span>
+        </div>
+        <div>
+          <Button onClick={() => modal?.toggle()}>OK</Button>
         </div>
       </div>
     </div>

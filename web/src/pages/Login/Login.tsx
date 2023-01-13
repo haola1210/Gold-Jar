@@ -1,4 +1,5 @@
 import Button from '@components/Button';
+import H1 from '@components/H1';
 import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
 import { useFormik } from 'formik';
@@ -31,20 +32,26 @@ const Login = () => {
   return (
     <LoginLayout>
       <div className='p-6'>
-        <span>Đăng Nhập</span>
-        <InputWithError
-          placeholder='Tên Đăng Nhập'
-          name='username'
-          onChange={handleChangeInput}
-          errorMessage={formik.errors.username}
-        />
-        <InputWithError
-          placeholder='Mật khẩu'
-          type='password'
-          name='password'
-          onChange={handleChangeInput}
-          errorMessage={formik.errors.password}
-        />
+        <div>
+          <H1 className='text-cyan-600'>Đăng nhập</H1>
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Tên Đăng Nhập'
+            name='username'
+            onChange={handleChangeInput}
+            errorMessage={formik.errors.username}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Mật khẩu'
+            type='password'
+            name='password'
+            onChange={handleChangeInput}
+            errorMessage={formik.errors.password}
+          />
+        </div>
       </div>
       <Button onClick={formik.handleSubmit}>Đăng nhập</Button>
       <div>Quên mật khẩu?</div>

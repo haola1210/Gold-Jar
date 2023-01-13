@@ -10,7 +10,6 @@ export interface IInputProps {
 
 const Input = ({ placeholder, type = 'text', name = '', onChange }: IInputProps) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
-
   const returnType = () => {
     if (type === 'text') {
       return 'text';
