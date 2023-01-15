@@ -5,13 +5,13 @@ interface ISelectWithErrorProps extends ISelectProps {
   errorMessage?: string;
 }
 
-const SelectWitError = ({ errorMessage, ...props }: ISelectWithErrorProps) => {
+const SelectWithError = ({ errorMessage, ...props }: ISelectWithErrorProps) => {
   return (
-    <div className='h-14'>
+    <div className=''>
       <Select {...props} />
       {errorMessage && <div className='text-red-700'>{errorMessage}</div>}
     </div>
   );
 };
 
-export default SelectWitError;
+export default SelectWithError;

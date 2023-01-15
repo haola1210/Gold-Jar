@@ -1,7 +1,8 @@
 import Button from '@components/Button';
+import H1 from '@components/H1';
 import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
-import SelectWitError from '@components/SelectWithError';
+import SelectWithError from '@components/SelectWithError';
 import { methods } from '@consts/method-list';
 import { useFormik } from 'formik';
 import { type ChangeEvent } from 'react';
@@ -40,34 +41,54 @@ const RetrievalPassword = () => {
 
   return (
     <LoginLayout>
-      <div className='p-4'>
-        <div>Lấy lại mật khẩu</div>
-        <InputWithError
-          placeholder='Tên đăng nhập'
-          onChange={handleChangeForm}
-          name='username'
-          errorMessage={formik.errors.username}
-        />
-        <InputWithError
-          placeholder='Email'
-          onChange={handleChangeForm}
-          name='email'
-          errorMessage={formik.errors.email}
-        />
-        <InputWithError
-          placeholder='Số điện thoại'
-          onChange={handleChangeForm}
-          name='phone'
-          errorMessage={formik.errors.phone}
-        />
-        <SelectWitError
-          options={methods}
-          className='pb-2'
-          placeholder='Nhận mã qua'
-          onChange={handleChangeSelect}
-          errorMessage={formik.errors.byPass}
-        />
-        <Button onClick={formik.handleSubmit}>Gửi mã</Button>
+      <div>
+        <div>
+          <H1 className='text-sky-400 pb-4'>Lấy lại mật khẩu</H1>
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Tên đăng nhập'
+            onChange={handleChangeForm}
+            name='username'
+            errorMessage={formik.errors.username}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Email'
+            onChange={handleChangeForm}
+            name='email'
+            errorMessage={formik.errors.email}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Số điện thoại'
+            onChange={handleChangeForm}
+            name='phone'
+            errorMessage={formik.errors.phone}
+          />
+        </div>
+        <div>
+          <SelectWithError
+            options={methods}
+            className='mb-2'
+            placeholder='Nhận mã qua'
+            onChange={handleChangeSelect}
+            errorMessage={formik.errors.byPass}
+          />
+        </div>
+        <div className='mt-8 text-right'>
+          <Button
+            className='bg-emerald-500 text-white'
+            style={{
+              width: '100px',
+            }}
+            onClick={() => formik.handleSubmit()}
+          >
+            Gửi mã
+          </Button>
+        </div>
       </div>
     </LoginLayout>
   );

@@ -4,6 +4,7 @@ import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
 import { useFormik } from 'formik';
 import { type ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 const schema = yup.object({
@@ -20,6 +21,7 @@ const schema = yup.object({
 });
 
 const Register = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
@@ -33,6 +35,7 @@ const Register = () => {
     validationSchema: schema,
     onSubmit(values) {
       console.log(values);
+      navigate('/login');
     },
   });
 
@@ -43,53 +46,80 @@ const Register = () => {
 
   return (
     <LoginLayout>
-      <div className=''>
-        <H1 className='text-sky-400 pb-4'>Đăng ký</H1>
-        <InputWithError
-          placeholder='Tên'
-          name='name'
-          errorMessage={formik.errors.name}
-          onChange={onChangeForm}
-        />
-        <InputWithError
-          placeholder='Tên đăng nhập'
-          name='username'
-          errorMessage={formik.errors.username}
-          onChange={onChangeForm}
-        />
-        <InputWithError
-          placeholder='email'
-          name='email'
-          errorMessage={formik.errors.email}
-          onChange={onChangeForm}
-        />
-        <InputWithError
-          placeholder='Số điện thoại'
-          name='phone'
-          errorMessage={formik.errors.phone}
-          onChange={onChangeForm}
-        />
-        <InputWithError
-          placeholder='Mật khẩu'
-          name='password'
-          type='password'
-          errorMessage={formik.errors.password}
-          onChange={onChangeForm}
-        />
-        <InputWithError
-          placeholder='Xác nhận mật khẩu'
-          name='confirmPassword'
-          type='password'
-          errorMessage={formik.errors.confirmPassword}
-          onChange={onChangeForm}
-        />
-      </div>
       <div>
-        <div>Đã có tài khoản</div>
         <div>
-          Quay lại <b>Đăng nhập</b>
+          <H1 className='text-sky-400 pb-4'>Đăng ký</H1>
         </div>
-        <Button onClick={() => formik.handleSubmit()}>Xác nhận</Button>
+        <div>
+          <InputWithError
+            placeholder='Tên'
+            name='name'
+            errorMessage={formik.errors.name}
+            onChange={onChangeForm}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Tên đăng nhập'
+            name='username'
+            errorMessage={formik.errors.username}
+            onChange={onChangeForm}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='email'
+            name='email'
+            errorMessage={formik.errors.email}
+            onChange={onChangeForm}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Số điện thoại'
+            name='phone'
+            errorMessage={formik.errors.phone}
+            onChange={onChangeForm}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Mật khẩu'
+            name='password'
+            type='password'
+            errorMessage={formik.errors.password}
+            onChange={onChangeForm}
+          />
+        </div>
+        <div>
+          <InputWithError
+            placeholder='Xác nhận mật khẩu'
+            name='confirmPassword'
+            type='password'
+            errorMessage={formik.errors.confirmPassword}
+            onChange={onChangeForm}
+          />
+        </div>
+      </div>
+
+      <div className='flex justify-between items-center'>
+        <div>
+          <div className='text-md text-sky-300 font-semibold'>Đã có tài khoản</div>
+          <div className='text-md text-sky-300 font-semibold'>
+            Quay lại <b onClick={() => navigate('/login')}>Đăng nhập</b>
+          </div>
+        </div>
+        <div>
+          <Button
+            className='bg-emerald-500 text-white'
+            style={{
+              width: '100px',
+            }}
+            onClick={() => formik.handleSubmit()}
+          >
+            Xác nhận
+          </Button>
+        </div>
       </div>
     </LoginLayout>
   );
