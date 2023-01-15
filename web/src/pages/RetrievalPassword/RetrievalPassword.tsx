@@ -6,6 +6,7 @@ import SelectWithError from '@components/SelectWithError';
 import { methods } from '@consts/method-list';
 import { useFormik } from 'formik';
 import { type ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const schema = Yup.object({
@@ -16,6 +17,7 @@ const schema = Yup.object({
 });
 
 const RetrievalPassword = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
@@ -27,6 +29,7 @@ const RetrievalPassword = () => {
     validationSchema: schema,
     onSubmit(values) {
       console.log(values);
+      navigate('/identify', { replace: true });
     },
   });
 
@@ -72,13 +75,21 @@ const RetrievalPassword = () => {
         <div>
           <SelectWithError
             options={methods}
-            className='mb-2'
             placeholder='Nhận mã qua'
             onChange={handleChangeSelect}
             errorMessage={formik.errors.byPass}
           />
         </div>
         <div className='mt-8 text-right'>
+          <Button
+            className='bg-cyan-500 text-white mr-4'
+            style={{
+              width: '100px',
+            }}
+            onClick={() => navigate('/login')}
+          >
+            Trang chủ
+          </Button>
           <Button
             className='bg-emerald-500 text-white'
             style={{
