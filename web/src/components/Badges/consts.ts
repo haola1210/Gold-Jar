@@ -1,6 +1,8 @@
 import { ActionType } from '@interfaces/action.type';
 
 export const mapper = {
-  [ActionType.INCOME.toLocaleLowerCase()]: 'Thu',
-  [ActionType.SPENDING.toLocaleLowerCase()]: 'Chi',
+  [ActionType.INCOME.toLowerCase()]: 'Thu',
+  [ActionType.INCOME]: 'Thu',
+  [ActionType.SPENDING.toLowerCase()]: 'Chi',
+  [ActionType.SPENDING]: 'Chi',
 };

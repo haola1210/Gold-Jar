@@ -68,3 +68,8 @@ export const spendingList: SpendingTag[] = [
     outlineColor: 'outline-sky-400',
   },
 ];
+
+export const spendingMapper = spendingList.reduce((mapper, item) => {
+  mapper[item.id] = item;
+  return mapper;
+}, {} as Record<SpendingTagId, SpendingTag>);

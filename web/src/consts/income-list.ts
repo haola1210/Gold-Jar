@@ -51,3 +51,8 @@ export const incomeList: IncomeTag[] = [
     outlineColor: 'outline-green-400',
   },
 ];
+
+export const incomeMapper = incomeList.reduce((mapper, item) => {
+  mapper[item.id] = item;
+  return mapper;
+}, {} as Record<IncomeTagId, IncomeTag>);

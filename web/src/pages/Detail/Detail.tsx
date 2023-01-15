@@ -1,14 +1,17 @@
 import Collapse, { Panel } from '@components/Collapse';
 import { useNavigate, useParams } from 'react-router-dom';
-import { mockdata } from './data.mock';
+import { mockDataResponse } from './data.mock';
 import { type ActionType } from '@interfaces/action.type';
 import Layout from '@components/Layout';
+import RecordHeader from './components/RecordHeader';
+import { type IncomeTagId, type SpendingTagId } from '@interfaces/tag.type';
+import RecordBody from './components/RecordBody';
 
 const Detail = () => {
   const { date } = useParams();
   const navigate = useNavigate();
   const handleGoHome = () => {
-    navigate('/income');
+    navigate(-1);
   };
 
   return (
@@ -23,20 +26,35 @@ const Detail = () => {
         {/* ở đây là component collapse */}
         <div className='grow border-2 border-gray-400 rounded-lg bg-slate-200 p-1 overflow-y-auto'>
           <Collapse>
-            {mockdata.map((item) => (
+            {mockDataResponse.map((item) => (
               <Panel
-                panelKey={item.key}
-                header={item.header}
-                key={item.header}
+                panelKey={item.id}
+                header={
+                  <RecordHeader
+                    type={item.type as ActionType}
+                    tagId={item.subType as SpendingTagId | IncomeTagId}
+                    concurrency={item.concurrency}
+                  />
+                }
+                key={item.id}
                 type={item.type as ActionType}
               >
-                {item.description}
+                <RecordBody
+                  detail={item.detail}
+                  onClickEdit={() => console.log('click edit')}
+                  onClickDelete={() => console.log('click delete')}
+                />
               </Panel>
             ))}
           </Collapse>
         </div>
-        <div className=''>
-          <button onClick={handleGoHome}>Go home</button>
+        <div className='pt-4'>
+          <button
+            className='block py-2 px-4 bg-green-600 font-bold text-white rounded-lg ml-auto'
+            onClick={handleGoHome}
+          >
+            Trở lại
+          </button>
         </div>
       </div>
     </Layout>
