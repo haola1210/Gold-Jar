@@ -7,7 +7,7 @@ const LoginLayout = (props: { children: ReactNode; className?: string }) => {
     <div className='relative h-full w-full'>
       <div className='w-full h-full flex flex-col items-center'>
         <LogoFull />
-        <div>{props.children}</div>
+        <div className='px-4 w-full'>{props.children}</div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
 import { useFormik } from 'formik';
 import { type ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const schema = Yup.object().shape({
@@ -12,6 +13,8 @@ const schema = Yup.object().shape({
 });
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
@@ -21,6 +24,7 @@ const Login = () => {
     validationSchema: schema,
     onSubmit(value) {
       console.log(value);
+      navigate('/spending');
     },
   });
 
@@ -31,7 +35,7 @@ const Login = () => {
 
   return (
     <LoginLayout>
-      <div className=''>
+      <div>
         <div>
           <H1 className='text-sky-400 pb-4'>Đăng nhập</H1>
         </div>
@@ -63,15 +67,21 @@ const Login = () => {
         >
           Đăng nhập
         </Button>
-        <div className='text-md text-sky-300 font-semibold'>Quên mật khẩu?</div>
+        <div
+          className='text-md text-sky-300 font-semibold'
+          onClick={() => navigate('/retrieval')}
+        >
+          Quên mật khẩu?
+        </div>
       </div>
-      <hr className='w-80 m-auto py-2' />
-      <div className='flex gap-4'>
+      <hr className='w-100 m-auto py-2' />
+      <div className='flex gap-12'>
         <Button
           className='bg-emerald-500 text-white'
           style={{
             width: '100px',
           }}
+          onClick={() => navigate('/register')}
         >
           Đăng ký
         </Button>

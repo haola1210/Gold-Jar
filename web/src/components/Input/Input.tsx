@@ -1,14 +1,18 @@
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
-import { useState, type ChangeEvent } from 'react';
+import { type HTMLProps, useState } from 'react';
 
-export interface IInputProps {
-  placeholder?: string;
+export interface IInputProps extends HTMLProps<HTMLInputElement> {
   type?: 'text' | 'password';
-  name?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ placeholder, type = 'text', name = '', onChange }: IInputProps) => {
+const Input = ({
+  placeholder,
+  type = 'text',
+  name = '',
+  onChange,
+  className,
+  value,
+}: IInputProps) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const returnType = () => {
     if (type === 'text') {
@@ -25,16 +29,17 @@ const Input = ({ placeholder, type = 'text', name = '', onChange }: IInputProps)
   };
 
   return (
-    <div className=''>
+    <>
       <div className='relative'>
         <input
           className={`
-            block w-full border rounded-md px-4 py-2
+            block w-full border rounded-md px-4 py-2 ${className ? className : ''}
           `}
           type={returnType()}
           name={name}
           onChange={onChange}
           placeholder={placeholder}
+          value={value}
         />
         {type === 'password' && (
           <>
@@ -54,7 +59,7 @@ const Input = ({ placeholder, type = 'text', name = '', onChange }: IInputProps)
           </>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
