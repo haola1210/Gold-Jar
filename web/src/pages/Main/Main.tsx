@@ -28,7 +28,7 @@ function Main() {
 
   return (
     <Layout>
-      <div className='h-full w-full overflow-y-scroll'>
+      <div className='h-full w-full overflow-y-auto'>
         <Calendar onChange={handleSelectDate} />
 
         <div className='flex justify-center mt-2'>

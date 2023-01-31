@@ -132,10 +132,8 @@ function Calendar({ onChange }: ICalendar) {
         <div
           className={` w-full
               grid grid-cols-7 grid-rows-5
-              divide-x
-              divide-y divide-y-reverse
-              devide-blue-300
-              border-r
+              divide-x divide-y devide-blue-300
+              border-r border-l border-b
             `}
         >
           {/* days of last month */}

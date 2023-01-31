@@ -15,7 +15,7 @@ function Layout({ children, className, ...rest }: ILayout) {
         <Header />
       </div>
 
-      <div className='flex-grow overflow-y-scroll '>{children}</div>
+      <div className='flex-grow overflow-y-auto '>{children}</div>
     </div>
   );
 }
