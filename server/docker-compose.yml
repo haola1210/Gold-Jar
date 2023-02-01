@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb_container_gold_jar
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: root
+      MONGO_INITDB_ROOT_USERNAME: haolamongodb
+      MONGO_INITDB_ROOT_PASSWORD: haolamongodb1210
+    volumes:
+      # named volumes
+      - mongodb_gold_jar:/data/db
+      - mongoconfig_gold_jar:/data/configdb
+
+  cache:
+    image: redis
+    container_name: redis_container_gold_jar
+    restart: always
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - redis_data_gold_jar:/data
+
+volumes:
+  mongodb_gold_jar:
+  mongoconfig_gold_jar:
+  redis_data_gold_jar:
