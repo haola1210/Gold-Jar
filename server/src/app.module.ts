@@ -4,7 +4,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -12,6 +11,8 @@ import { MongooseModule } from '@nestjs/mongoose';
         uri: config.get<string>('MONGODB_URI'), // Loaded from .ENV
       }),
     }),
+
+    ConfigModule.forRoot({ isGlobal: true }),
   ],
 })
 export class AppModule {}
