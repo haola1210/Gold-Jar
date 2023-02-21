@@ -4,8 +4,14 @@
 
 body {
   @apply w-screen h-screen;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 
-#root{
-  @apply h-full w-full;
+#root {
+  @apply h-full w-full relative;
+}
+
+#header-menu {
+  @apply absolute top-0 left-0;
 }
