@@ -1,13 +1,13 @@
 import { SetMetadata } from '@nestjs/common';
-import { AuthEnum, AuthMetaEnum } from '../auth.types';
+import { AUTH_META, AUTH_TOKEN_META } from '../interfaces/auth.enum';
 
-export const Public = () => SetMetadata(AuthMetaEnum.TOKEN_META, AuthEnum.PUBLIC);
+export const Public = () => SetMetadata(AUTH_META.TOKEN_META, AUTH_TOKEN_META.PUBLIC);
 
 export const WithoutTokenOnly = () =>
-  SetMetadata(AuthMetaEnum.TOKEN_META, AuthEnum.WITHOUT_TOKEN_ONLY);
+  SetMetadata(AUTH_META.TOKEN_META, AUTH_TOKEN_META.WITHOUT_TOKEN_ONLY);
 
 export const WithActiveTokenOnly = () =>
-  SetMetadata(AuthMetaEnum.TOKEN_META, AuthEnum.WITH_ACTIVE_TOKEN_ONLY);
+  SetMetadata(AUTH_META.TOKEN_META, AUTH_TOKEN_META.WITH_ACTIVE_TOKEN_ONLY);
 
 export const WithExpiredTokenOnly = () =>
-  SetMetadata(AuthMetaEnum.TOKEN_META, AuthEnum.WITH_EXPIRED_TOKEN_ONLY);
+  SetMetadata(AUTH_META.TOKEN_META, AUTH_TOKEN_META.WITH_EXPIRED_TOKEN_ONLY);

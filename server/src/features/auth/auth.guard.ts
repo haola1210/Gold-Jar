@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthEnum, AuthMetaEnum } from './auth.types';
+import { AUTH_META, AUTH_TOKEN_META } from './interfaces/auth.enum';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,8 +11,8 @@ export class AuthGuard implements CanActivate {
     const controller = context.getClass();
 
     const handlerOverrideController =
-      this.reflector.getAllAndOverride(AuthMetaEnum.TOKEN_META, [handler, controller]) ??
-      AuthEnum.PUBLIC;
+      this.reflector.getAllAndOverride(AUTH_META.TOKEN_META, [handler, controller]) ??
+      AUTH_TOKEN_META.PUBLIC;
 
     console.log(handlerOverrideController);
 

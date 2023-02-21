@@ -1,19 +1,30 @@
-import { Body, Controller, Post } from '@nestjs/common/decorators';
-import { CreateOneUserDTO } from 'src/common/DTOs/create-one-user.dto';
+import { Body, Controller, Post, Res, Req, Get } from '@nestjs/common/decorators';
 import { AuthService } from './auth.service';
+import { registerDTO } from './interfaces/register.dto';
+import { Response, Request } from 'express';
+import LoginDTO from './interfaces/login.dto';
+import { WithExpiredTokenOnly, WithoutTokenOnly } from './decorators/token-meta.decorators';
 
 @Controller('auth')
 export class AuthController {
   //
   constructor(private authService: AuthService) {}
 
+  @WithoutTokenOnly()
   @Post('register')
-  async register(@Body() registerDTO: CreateOneUserDTO) {
-    return this.authService.register(registerDTO);
+  async register(@Body() registerDTO: registerDTO, @Res({ passthrough: true }) res: Response) {
+    return this.authService.register(registerDTO, res);
   }
 
+  @WithoutTokenOnly()
   @Post('login')
-  async login() {
-    return 'OK';
+  async login(@Body() loginDTO: LoginDTO, @Res({ passthrough: true }) res: Response) {
+    return this.authService.loginProcess(loginDTO, res);
+  }
+
+  @WithExpiredTokenOnly()
+  @Get('refresh-token')
+  async refreshToken(@Req() req: Request) {
+    return this.authService.processRefreshToken(req);
   }
 }

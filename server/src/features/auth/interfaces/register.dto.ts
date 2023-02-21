@@ -1,7 +1,7 @@
 import { TransformFnParams, Transform } from 'class-transformer';
 import { IsString, IsNotEmpty, MinLength, Length, IsLowercase, IsEmail } from 'class-validator';
 
-export class CreateOneUserDTO {
+export class registerDTO {
   @IsString()
   @IsNotEmpty()
   @Transform(({ value }: TransformFnParams) => value?.trim())
