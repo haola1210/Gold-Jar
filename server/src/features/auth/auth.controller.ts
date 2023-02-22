@@ -1,10 +1,12 @@
-import { Body, Controller, Post, Res, Req, Get } from '@nestjs/common/decorators';
+import { Body, Controller, Post, Res, Req, Get, UseGuards } from '@nestjs/common/decorators';
 import { AuthService } from './auth.service';
 import { registerDTO } from './interfaces/register.dto';
 import { Response, Request } from 'express';
 import LoginDTO from './interfaces/login.dto';
 import { WithExpiredTokenOnly, WithoutTokenOnly } from './decorators/token-meta.decorators';
+import { AuthGuard } from './guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('auth')
 export class AuthController {
   //
