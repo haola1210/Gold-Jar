@@ -3,6 +3,8 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  CACHE_MANAGER,
+  Inject,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -10,10 +12,14 @@ import { User, UserDocument } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { registerDTO } from '../auth/interfaces/register.dto';
 import LoginDTO from '../auth/interfaces/login.dto';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   async createOneUser(createOneUserDTO: registerDTO) {
     try {
@@ -43,11 +49,11 @@ export class UsersService {
 
   async getUserById(id: Types.ObjectId) {
     try {
-      // const cachedUser = await this.cacheManager.get<User>(`USER_ID_${id}`);
-      // if (cachedUser) {
-      //   console.log('user from cache');
-      //   return cachedUser;
-      // }
+      const cachedUser = await this.cacheManager.get<UserDocument>(`USER_ID_${id}`);
+      if (cachedUser) {
+        console.log('user from cache');
+        return cachedUser;
+      }
 
       const user = await this.userModel.findById(id);
 
@@ -55,8 +61,8 @@ export class UsersService {
         throw new NotFoundException();
       }
 
-      // console.log('user from db, cache this now');
-      // await this.cacheManager.set(`USER_ID_${id}`, user);
+      console.log('user from db, cache this now');
+      await this.cacheManager.set(`USER_ID_${id}`, user);
 
       return user;
       //
