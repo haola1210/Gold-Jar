@@ -4,8 +4,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './features/users/users.module';
 import { AuthModule } from './features/auth/auth.module';
 import * as redisStore from 'cache-manager-redis-store';
+import { APP_GUARD } from '@nestjs/core';
+import { ProxyGuard } from './features/auth/guards/proxy.guard';
 
 @Module({
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ProxyGuard,
+    },
+  ],
   imports: [
     UsersModule,
     AuthModule,
