@@ -26,6 +26,7 @@
       "@routes/*" : ["./routes/*"],
       "@assets/*" : ["./assets/*"],
       "@interfaces/*" : ["./interfaces/*"],
+      "@services/*" : ["./services/*"],
     }
   },
   "include": ["src"],

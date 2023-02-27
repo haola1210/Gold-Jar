@@ -1,5 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 type IPages = Record<string, React.LazyExoticComponent<() => JSX.Element>>;
 type ILazyImport = Promise<{
@@ -36,38 +38,45 @@ function RoutesContainer() {
   return (
     <Suspense fallback={<div>loading...</div>}>
       <Routes>
-        <Route
-          path='/detail/:date'
-          element={<Pages.Detail />}
-        />
-        <Route
-          path='/:type'
-          element={<Pages.Main />}
-        />
-        <Route
-          path='/'
-          element={<Pages.Root />}
-        />
-        <Route
-          path='/login'
-          element={<Pages.Login />}
-        />
-        <Route
-          path='/register'
-          element={<Pages.Register />}
-        />
-        <Route
-          path='/identify'
-          element={<Pages.Identify />}
-        />
-        <Route
-          path='/retrieval'
-          element={<Pages.RetrievalPassword />}
-        />
-        <Route
-          path='/welcome'
-          element={<Pages.Welcome />}
-        />
+        <Route element={<PrivateRoute />}>
+          <Route
+            path='/detail/:date'
+            element={<Pages.Detail />}
+          />
+          <Route
+            path='/:type'
+            element={<Pages.Main />}
+          />
+          <Route
+            path='/'
+            element={<Pages.Root />}
+          />
+        </Route>
+
+        {/* public routes */}
+        <Route element={<PublicRoute />}>
+          <Route
+            path='/login'
+            element={<Pages.Login />}
+          />
+          <Route
+            path='/register'
+            element={<Pages.Register />}
+          />
+          <Route
+            path='/identify'
+            element={<Pages.Identify />}
+          />
+          <Route
+            path='/retrieval'
+            element={<Pages.RetrievalPassword />}
+          />
+          <Route
+            path='/welcome'
+            element={<Pages.Welcome />}
+          />
+        </Route>
+        {/* ######## */}
       </Routes>
     </Suspense>
   );
