@@ -2,9 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
+import * as fs from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  //
+  const httpsOptions = {
+    key: fs.readFileSync('./secret/private-key.pem'),
+    cert: fs.readFileSync('./secret/public-certificate.pem'),
+  };
+
+  const app = await NestFactory.create(AppModule, { httpsOptions });
 
   //#region
   app.enableCors({
@@ -26,6 +33,9 @@ async function bootstrap() {
     }),
   );
   //
-  await app.listen(process.env.PORT || 3333);
+  const port = process.env.PORT || 3333;
+  await app.listen(port, () => {
+    console.log(`Server at: https://localhost:${port}`);
+  });
 }
 bootstrap();
