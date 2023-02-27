@@ -80,6 +80,7 @@ export class AuthService {
 
   storeRefreshToken(res: Response, refreshToken: string) {
     res.cookie('rt', refreshToken, {
+      sameSite: 'none',
       signed: true,
       httpOnly: true,
       path: this.CKPath,
