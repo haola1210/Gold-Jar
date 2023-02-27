@@ -8,3 +8,8 @@ export interface IUserDTO {
 export interface IAuthRes {
   accessToken: string;
 }
+
+export interface ILoginUser {
+  username: string;
+  password: string;
+}

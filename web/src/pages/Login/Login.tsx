@@ -2,14 +2,23 @@ import Button from '@components/Button';
 import H1 from '@components/H1';
 import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
+import { type ILoginUser } from '@interfaces/user.type';
+import { login } from '@services/auth.service';
+import { converError } from '@utils/convertError';
 import { useFormik } from 'formik';
 import { type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const schema = Yup.object().shape({
-  username: Yup.string().required('Vui lòng điền tên đăng nhập!'),
-  password: Yup.string().required('Vui lòng điền mật khẩu nè!'),
+  username: Yup.string()
+    .required('Vui lòng điền tên đăng nhập!')
+    .min(6, 'Tên đăng nhập phải dài hơn 5 ký tự')
+    .max(25, 'Tên đăng nhập phải ngắn hơn 26 ký tự'),
+  password: Yup.string()
+    .trim()
+    .required('Vui lòng điền mật khẩu nè!')
+    .min(8, 'Mật khẩu phải dài hơn 7 ký tự'),
 });
 
 const Login = () => {
@@ -22,9 +31,20 @@ const Login = () => {
       password: '',
     },
     validationSchema: schema,
-    onSubmit(value) {
-      console.log(value);
-      navigate('/spending');
+    async onSubmit(value) {
+      const user: ILoginUser = {
+        username: value.username,
+        password: value.password,
+      };
+      try {
+        const { accessToken } = await login(user);
+        localStorage.setItem('access_token', accessToken);
+        navigate('/spending', { replace: true });
+      } catch (error) {
+        console.log(error);
+        const errorMessage = converError(error);
+        formik.setErrors(errorMessage);
+      }
     },
   });
 
@@ -41,6 +61,7 @@ const Login = () => {
         </div>
         <div>
           <InputWithError
+            label='Tên Đăng Nhập'
             placeholder='Tên Đăng Nhập'
             name='username'
             onChange={handleChangeInput}
@@ -49,6 +70,7 @@ const Login = () => {
         </div>
         <div>
           <InputWithError
+            label='Mật khẩu'
             placeholder='Mật khẩu'
             type='password'
             name='password'
