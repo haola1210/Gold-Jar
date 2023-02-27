@@ -2,40 +2,61 @@ import Button from '@components/Button';
 import H1 from '@components/H1';
 import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
+import { type IUserDTO } from '@interfaces/user.type';
 import { useFormik } from 'formik';
-import { type ChangeEvent } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { register } from '@services/auth.service';
 import * as yup from 'yup';
+import { converError } from '@utils/convertError';
 
 const schema = yup.object({
-  name: yup
+  name: yup.string().required('Chưa nhập tên nè !!!').min(3, 'Tên phải dài hơn 2 ký tự'),
+  username: yup
     .string()
-    .required('Chưa nhập tên nè !!!')
-    .min(5, 'Tên phải dài hơn 4 ký tự')
-    .max(20, 'Tên phải ngắn hơn 20 ký tự'),
-  username: yup.string().required('Chưa nhập tên đăng nhập nè!!!'),
+    .required('Chưa nhập tên đăng nhập nè!!!')
+    .min(6, 'Tên đăng nhập phải dài hơn 5 ký tự')
+    .max(25, 'Tên đăng nhập phải ngắn hơn 26 ký tự'),
   email: yup.string().required('Chưa nhập email nè!!!').email('Chưa đúng định dạng Email nhaa!!!'),
-  phone: yup.string().required('Chưa nhập số điện thoại nè!!!'),
-  password: yup.string().required('Chưa nhập password nè!!!'),
+  password: yup
+    .string()
+    .trim()
+    .required('Chưa nhập password nè!!!')
+    .min(8, 'Mật khẩu phải dài hơn 7 ký tự'),
   confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Chưa khớp password nè !!'),
 });
 
 const Register = () => {
   const navigate = useNavigate();
+  const [isFetching, setIsFetching] = useState(false);
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
       name: '',
       username: '',
       email: '',
-      phone: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema: schema,
-    onSubmit(values) {
-      console.log(values);
-      navigate('/login');
+    async onSubmit(values) {
+      setIsFetching(true);
+      const user: IUserDTO = {
+        name: values.name,
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
+      try {
+        const { accessToken } = await register(user);
+        localStorage.setItem('access_token', accessToken);
+        navigate('/');
+      } catch (error: any) {
+        const castedErrors = converError(error);
+        formik.setErrors(castedErrors);
+      }
+
+      setIsFetching(false);
     },
   });
 
@@ -76,14 +97,6 @@ const Register = () => {
         </div>
         <div>
           <InputWithError
-            placeholder='Số điện thoại'
-            name='phone'
-            errorMessage={formik.errors.phone}
-            onChange={onChangeForm}
-          />
-        </div>
-        <div>
-          <InputWithError
             placeholder='Mật khẩu'
             name='password'
             type='password'
@@ -116,6 +129,7 @@ const Register = () => {
               width: '100px',
             }}
             onClick={() => formik.handleSubmit()}
+            disabled={isFetching}
           >
             Xác nhận
           </Button>

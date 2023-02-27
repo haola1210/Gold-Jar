@@ -1,9 +1,10 @@
-import { createContext, type ReactNode, useState, useContext } from 'react';
+import { createContext, type ReactNode, useState, useContext, useCallback } from 'react';
 
-interface User {
+export interface User {
   name: string;
   email: string;
-  id: string;
+  _id: string;
+  username: string;
 }
 
 interface IAuthContextProps {
@@ -11,23 +12,26 @@ interface IAuthContextProps {
 }
 
 interface IAuthContext {
-  user?: User;
-  login: (user: User) => void;
-  logout: () => void;
+  user: User | undefined;
+  login?: (user: User) => void;
+  logout?: () => void;
 }
 
-const AuthContext = createContext<IAuthContext | undefined>(undefined);
+const AuthContext = createContext<IAuthContext>({
+  user: undefined,
+});
 
 export const AuthContextProvider = ({ children }: IAuthContextProps) => {
   const [user, setUser] = useState<User | undefined>(undefined);
 
-  const login = (user: User) => {
+  const login = useCallback((user: User) => {
+    console.log(user);
     setUser(user);
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(undefined);
-  };
+  }, []);
 
   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
 };
