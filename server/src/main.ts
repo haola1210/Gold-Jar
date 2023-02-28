@@ -6,12 +6,13 @@ import * as fs from 'fs';
 
 async function bootstrap() {
   //
-  const httpsOptions = {
-    key: fs.readFileSync('./secret/private-key.pem'),
-    cert: fs.readFileSync('./secret/public-certificate.pem'),
-  };
+  // const httpsOptions = {
+  //   key: fs.readFileSync('./secret/private-key.pem'),
+  //   cert: fs.readFileSync('./secret/public-certificate.pem'),
+  // };
 
-  const app = await NestFactory.create(AppModule, { httpsOptions });
+  // const app = await NestFactory.create(AppModule, { httpsOptions });
+  const app = await NestFactory.create(AppModule);
 
   //#region
   app.enableCors({
@@ -35,7 +36,8 @@ async function bootstrap() {
   //
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
-    console.log(`Server at: https://localhost:${port}`);
+    // console.log(`Server at: https://localhost:${port}`);
+    console.log(`Server at: http://localhost:${port}`);
   });
 }
 bootstrap();
