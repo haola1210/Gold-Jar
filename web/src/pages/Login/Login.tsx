@@ -39,9 +39,9 @@ const Login = () => {
       try {
         const { accessToken } = await login(user);
         localStorage.setItem('access_token', accessToken);
-        navigate('/spending', { replace: true });
+        navigate(localStorage.getItem('oldPath') ?? `/`, { replace: true });
+        localStorage.removeItem('oldPath');
       } catch (error) {
-        console.log(error);
         const errorMessage = converError(error);
         formik.setErrors(errorMessage);
       }
