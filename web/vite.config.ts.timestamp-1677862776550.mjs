@@ -1,0 +1,31 @@
+// vite.config.ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
+import * as path from "path";
+var __vite_injected_original_dirname = "D:\\T\u1EF1 H\u1ECDc\\HaoNgoc\\web";
+var vite_config_default = defineConfig({
+  plugins: [react(), svgr()],
+  server: {
+    port: 3e3
+  },
+  resolve: {
+    alias: {
+      "@pages": path.resolve(__vite_injected_original_dirname, "./src/pages"),
+      "@components": path.resolve(__vite_injected_original_dirname, "./src/components"),
+      "@hooks": path.resolve(__vite_injected_original_dirname, "./src/hooks"),
+      "@utils": path.resolve(__vite_injected_original_dirname, "./src/utils"),
+      "@contexts": path.resolve(__vite_injected_original_dirname, "./src/contexts"),
+      "@consts": path.resolve(__vite_injected_original_dirname, "./src/consts"),
+      "@routes": path.resolve(__vite_injected_original_dirname, "./src/routes"),
+      "@assets": path.resolve(__vite_injected_original_dirname, "./src/assets"),
+      "@interfaces": path.resolve(__vite_injected_original_dirname, "./src/interfaces"),
+      "@services": path.resolve(__vite_injected_original_dirname, "./src/services"),
+      "@": path.resolve(__vite_injected_original_dirname, "./src")
+    }
+  }
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCJEOlxcXFxUXHUxRUYxIEhcdTFFQ0RjXFxcXEhhb05nb2NcXFxcd2ViXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ZpbGVuYW1lID0gXCJEOlxcXFxUXHUxRUYxIEhcdTFFQ0RjXFxcXEhhb05nb2NcXFxcd2ViXFxcXHZpdGUuY29uZmlnLnRzXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ltcG9ydF9tZXRhX3VybCA9IFwiZmlsZTovLy9EOi9UJUUxJUJCJUIxJTIwSCVFMSVCQiU4RGMvSGFvTmdvYy93ZWIvdml0ZS5jb25maWcudHNcIjtpbXBvcnQgeyBkZWZpbmVDb25maWcgfSBmcm9tICd2aXRlJztcbmltcG9ydCByZWFjdCBmcm9tICdAdml0ZWpzL3BsdWdpbi1yZWFjdCc7XG5pbXBvcnQgc3ZnciBmcm9tICd2aXRlLXBsdWdpbi1zdmdyJztcbmltcG9ydCAqIGFzIHBhdGggZnJvbSAncGF0aCc7XG5cbi8vIGh0dHBzOi8vdml0ZWpzLmRldi9jb25maWcvXG5leHBvcnQgZGVmYXVsdCBkZWZpbmVDb25maWcoe1xuICBwbHVnaW5zOiBbcmVhY3QoKSwgc3ZncigpXSxcbiAgc2VydmVyOiB7XG4gICAgcG9ydDogMzAwMCxcbiAgfSxcbiAgcmVzb2x2ZToge1xuICAgIGFsaWFzOiB7XG4gICAgICAnQHBhZ2VzJzogcGF0aC5yZXNvbHZlKF9fZGlybmFtZSwgJy4vc3JjL3BhZ2VzJyksXG4gICAgICAnQGNvbXBvbmVudHMnOiBwYXRoLnJlc29sdmUoX19kaXJuYW1lLCAnLi9zcmMvY29tcG9uZW50cycpLFxuICAgICAgJ0Bob29rcyc6IHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICcuL3NyYy9ob29rcycpLFxuICAgICAgJ0B1dGlscyc6IHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICcuL3NyYy91dGlscycpLFxuICAgICAgJ0Bjb250ZXh0cyc6IHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICcuL3NyYy9jb250ZXh0cycpLFxuICAgICAgJ0Bjb25zdHMnOiBwYXRoLnJlc29sdmUoX19kaXJuYW1lLCAnLi9zcmMvY29uc3RzJyksXG4gICAgICAnQHJvdXRlcyc6IHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICcuL3NyYy9yb3V0ZXMnKSxcbiAgICAgICdAYXNzZXRzJzogcGF0aC5yZXNvbHZlKF9fZGlybmFtZSwgJy4vc3JjL2Fzc2V0cycpLFxuICAgICAgJ0BpbnRlcmZhY2VzJzogcGF0aC5yZXNvbHZlKF9fZGlybmFtZSwgJy4vc3JjL2ludGVyZmFjZXMnKSxcbiAgICAgICdAc2VydmljZXMnOiBwYXRoLnJlc29sdmUoX19kaXJuYW1lLCAnLi9zcmMvc2VydmljZXMnKSxcbiAgICAgICdAJzogcGF0aC5yZXNvbHZlKF9fZGlybmFtZSwgJy4vc3JjJyksXG4gICAgfSxcbiAgfSxcbn0pO1xuIl0sCiAgIm1hcHBpbmdzIjogIjtBQUEyUSxTQUFTLG9CQUFvQjtBQUN4UyxPQUFPLFdBQVc7QUFDbEIsT0FBTyxVQUFVO0FBQ2pCLFlBQVksVUFBVTtBQUh0QixJQUFNLG1DQUFtQztBQU16QyxJQUFPLHNCQUFRLGFBQWE7QUFBQSxFQUMxQixTQUFTLENBQUMsTUFBTSxHQUFHLEtBQUssQ0FBQztBQUFBLEVBQ3pCLFFBQVE7QUFBQSxJQUNOLE1BQU07QUFBQSxFQUNSO0FBQUEsRUFDQSxTQUFTO0FBQUEsSUFDUCxPQUFPO0FBQUEsTUFDTCxVQUFlLGFBQVEsa0NBQVcsYUFBYTtBQUFBLE1BQy9DLGVBQW9CLGFBQVEsa0NBQVcsa0JBQWtCO0FBQUEsTUFDekQsVUFBZSxhQUFRLGtDQUFXLGFBQWE7QUFBQSxNQUMvQyxVQUFlLGFBQVEsa0NBQVcsYUFBYTtBQUFBLE1BQy9DLGFBQWtCLGFBQVEsa0NBQVcsZ0JBQWdCO0FBQUEsTUFDckQsV0FBZ0IsYUFBUSxrQ0FBVyxjQUFjO0FBQUEsTUFDakQsV0FBZ0IsYUFBUSxrQ0FBVyxjQUFjO0FBQUEsTUFDakQsV0FBZ0IsYUFBUSxrQ0FBVyxjQUFjO0FBQUEsTUFDakQsZUFBb0IsYUFBUSxrQ0FBVyxrQkFBa0I7QUFBQSxNQUN6RCxhQUFrQixhQUFRLGtDQUFXLGdCQUFnQjtBQUFBLE1BQ3JELEtBQVUsYUFBUSxrQ0FBVyxPQUFPO0FBQUEsSUFDdEM7QUFBQSxFQUNGO0FBQ0YsQ0FBQzsiLAogICJuYW1lcyI6IFtdCn0K

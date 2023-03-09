@@ -83,6 +83,7 @@ export class AuthService {
       sameSite: 'none',
       signed: true,
       httpOnly: true,
+      secure: true,
       path: this.CKPath,
     });
   }
