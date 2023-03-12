@@ -1,0 +1,18 @@
+export enum MoneyType {
+  SALARY = 'SALARY',
+  LEFT_HAND = 'LEFT_HAND',
+  BUTACHI = 'BUTACHI',
+  OUTSIDE_INVEST = 'OUTSIDE_INVEST',
+  LUCKY = 'LUCKY',
+  EDUCATION = 'EDUCATION',
+  FAVORITE = 'FAVORITE',
+  INVEST = 'INVEST',
+  CHARITY = 'CHARITY',
+  SPENDING = 'SPENDING',
+  PLAYING = 'PLAYING',
+}
+
+export enum Currency {
+  DOLLAR = 'DOLLAR',
+  VND = 'VND',
+}
