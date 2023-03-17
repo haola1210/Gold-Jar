@@ -24,12 +24,15 @@ export class MoneyController {
 
   @Get(`note`)
   async getNote(@Req() req: Request) {
-    const { date } = req.query;
-    return this.moneyService.getNote(date as string);
+    const { day, month, year } = req.query;
+    console.log({ day, month, year });
+
+    return this.moneyService.getNote(day as string, month as string, year as string);
   }
 
   @Post('note')
   async createNote(@Body() createMoneyNote: createMoneyNoteDTO) {
+    console.log(createMoneyNote);
     return this.moneyService.createMoneyNote(createMoneyNote);
   }
 

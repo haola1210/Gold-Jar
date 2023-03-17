@@ -161,6 +161,7 @@ export class AuthService {
 
   async processRefreshToken(req: Request) {
     try {
+      console.log(`refresh token`);
       // don't need to check the access token anymore. the guard did
       const refreshToken = this.extractRefreshToken(req);
       const user = await this.verifyRefreshToken(refreshToken);

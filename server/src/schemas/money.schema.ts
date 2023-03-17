@@ -1,6 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Currency, MoneyType } from 'src/constants/MoneyTypeEnum';
+import { IForDate } from 'src/features/money/interfaces/IForDate';
 
 export type MoneyDocument = HydratedDocument<Money>;
 
@@ -10,6 +11,7 @@ export class Money {
     type: String,
     enum: MoneyType,
     required: true,
+    index: 'text',
   })
   type: MoneyType;
 
@@ -17,7 +19,7 @@ export class Money {
   amount: number;
 
   @Prop({})
-  desciption: string;
+  description: string;
 
   @Prop({ type: String, enum: Currency, default: Currency.VND })
   unit: Currency;
@@ -27,8 +29,16 @@ export class Money {
 
   @Prop({ default: Date.now() })
   updatedAt: Date;
+
+  @Prop({
+    type: raw({
+      day: { type: Number },
+      month: { type: Number },
+      year: { type: Number },
+    }),
+    required: true,
+  })
+  forDate: IForDate;
 }
 
 export const MoneySchema = SchemaFactory.createForClass(Money);
-
-MoneySchema.index({ unit: 'text' });

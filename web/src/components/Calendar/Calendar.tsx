@@ -77,14 +77,16 @@ function Calendar({ onChange }: ICalendar) {
     // console.log(selectedDate, dateObject, dateObject.isSame(selectedDate, 'date'));
     if (selectedDate && dateObject.isSame(selectedDate, 'date')) {
       //
-      navigateDetail('12-10-2000');
+      navigateDetail(
+        `?day=${selectedDate.date()}&month=${selectedDate.month()}&year=${selectedDate.year()}`,
+      );
     } else {
       selectDate(dateObject);
     }
   };
 
   const navigateDetail = useCallback((date: string) => {
-    navigate(`/detail/${date}`);
+    navigate(`/detail${date}`);
   }, []);
 
   // Optimized ranges

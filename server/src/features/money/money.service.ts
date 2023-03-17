@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { Money, MoneyDocument } from 'src/schemas/money.schema';
 import createMoneyNoteDTO from './interfaces/createNote.dto';
 import updateMoneyNoteDTO from './interfaces/updateNote.dto';
-import * as dayjs from 'dayjs';
 
 @Injectable()
 export class MoneyService {
@@ -14,6 +13,7 @@ export class MoneyService {
     try {
       const moneyNote = new this.moneyModel(createMoneyDTO);
       await moneyNote.save();
+      console.log(moneyNote);
       return moneyNote;
     } catch (error) {
       throw new BadRequestException();
@@ -33,21 +33,16 @@ export class MoneyService {
     }
   }
 
-  async getNote(date?: string) {
+  async getNote(day?: string, month?: string, year?: string) {
     let noteList;
     try {
-      if (date) {
-        const dateConvert = dayjs(+date);
-        const startTime = dateConvert.startOf('date').toDate();
-        const endTime = dateConvert.endOf('date').toDate();
-        console.log({ startTime, endTime });
-
+      if (day !== undefined && month !== undefined && year !== undefined) {
         noteList = await this.moneyModel.find({
-          createdAt: {
-            $gte: startTime,
-            $lt: endTime,
-          },
+          'forDate.day': Number(day),
+          'forDate.month': Number(month),
+          'forDate.year': Number(year),
         });
+        console.log(noteList);
       } else {
         noteList = await this.moneyModel.find().limit(10);
       }

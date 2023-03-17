@@ -9,12 +9,12 @@ import { ProxyGuard } from './features/auth/guards/proxy.guard';
 import { MoneyModule } from './features/money/money.module';
 
 @Module({
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: ProxyGuard,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: ProxyGuard,
+  //   },
+  // ],
   imports: [
     UsersModule,
     AuthModule,

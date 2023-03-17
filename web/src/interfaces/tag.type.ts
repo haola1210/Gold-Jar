@@ -25,6 +25,11 @@ export const enum IncomeTagId {
   LOTERY = 'LOTERY',
 }
 
+export enum Currency {
+  DOLLAR = 'DOLLAR',
+  VND = 'VND',
+}
+
 export type SpendingTag = Tag<SpendingTagId>;
 export type IncomeTag = Tag<IncomeTagId>;
 

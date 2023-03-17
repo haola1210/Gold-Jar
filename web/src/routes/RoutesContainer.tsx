@@ -40,7 +40,7 @@ function RoutesContainer() {
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route
-            path='/detail/:date'
+            path='/detail'
             element={<Pages.Detail />}
           />
           <Route
