@@ -2,11 +2,16 @@ import { type MoneyNote } from '@interfaces/money.type';
 import { privateInstance } from './axios';
 
 export const createNote = async (moneyNote: MoneyNote) => {
-  const { data } = await privateInstance.post(`/money/note`, moneyNote);
+  const { data } = await privateInstance.post(`/note`, moneyNote);
   return data as MoneyNote;
 };
 
 export const getDetail = async (day: string, month: string, year: string) => {
-  const data = await privateInstance.get(`/money/note?day=${day}&month=${month}&year=${year}`);
+  const data = await privateInstance.get(`/note?day=${day}&month=${month}&year=${year}`);
+  return data;
+};
+
+export const getDetailById = async (id: string) => {
+  const data = await privateInstance.get(`/note/${id}`);
   return data;
 };

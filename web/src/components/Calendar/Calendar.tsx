@@ -5,7 +5,7 @@ import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/
 import { rangeWithKey } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
 import CalendarHeader from './components/CalendarHeader';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { legend, weekDays } from './consts';
 import { type ICalendar } from './types';
 import DateCell from './components/DateCell';
@@ -25,6 +25,7 @@ function Calendar({ onChange }: ICalendar) {
   const [day, setDay] = useState(() => dayjs());
   const [selectedDate, selectDate] = useState<dayjs.Dayjs | undefined>(() => day);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     onChange?.(selectedDate);
@@ -86,6 +87,7 @@ function Calendar({ onChange }: ICalendar) {
   };
 
   const navigateDetail = useCallback((date: string) => {
+    localStorage.setItem(`oldPath`, location.pathname);
     navigate(`/detail${date}`);
   }, []);
 

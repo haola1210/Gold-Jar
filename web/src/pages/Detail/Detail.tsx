@@ -3,9 +3,11 @@ import Layout from '@components/Layout';
 import { ActionType } from '@interfaces/action.type';
 import { type MoneyNote } from '@interfaces/money.type';
 import { IncomeTagId, SpendingTagId } from '@interfaces/tag.type';
-import { getDetail } from '@services/money.service';
+import { getDetail } from '@services/note.service';
+import { deleteNote } from '@services/user.service';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import RecordBody from './components/RecordBody';
 import RecordHeader from './components/RecordHeader';
 
@@ -24,7 +26,6 @@ const Detail = () => {
         params.get(`month`) ?? ``,
         params.get(`year`) ?? ``,
       );
-      console.log(data);
       setData(data?.data);
     })();
   }, []);
@@ -47,6 +48,22 @@ const Detail = () => {
     };
 
     return income[v as IncomeTagId] ? income[v as IncomeTagId] : spending[v as SpendingTagId];
+  };
+
+  const handleDeleteNote = async (id?: string) => {
+    await deleteNote(id)
+      .then(async () => {
+        const data = await getDetail(
+          params.get(`day`) ?? ``,
+          params.get(`month`) ?? ``,
+          params.get(`year`) ?? ``,
+        );
+        setData(data?.data);
+        toast(`Xoá thành công ghi chú!!!`);
+      })
+      .catch(() => {
+        toast(`Có gì đó đang sai nè!`);
+      });
   };
 
   return (
@@ -78,8 +95,8 @@ const Detail = () => {
               >
                 <RecordBody
                   detail={item.description ?? ``}
-                  onClickEdit={() => console.log('click edit')}
-                  onClickDelete={() => console.log('click delete')}
+                  onClickEdit={() => navigate(`/edit-note/${item?._id ?? ``}`)}
+                  onClickDelete={async () => handleDeleteNote(item?._id)}
                 />
               </Panel>
             ))}

@@ -1,4 +1,4 @@
-export enum MoneyType {
+export enum SubType {
   EXPENSE = 'EXPENSE',
   SAVING = 'SAVING',
   EDUCATION = 'EDUCATION',
@@ -10,6 +10,11 @@ export enum MoneyType {
   PARENT = 'PARENT',
   UN_INVESTMENT = 'UN_INVESTMENT',
   LOTERY = 'LOTERY',
+}
+
+export enum Type {
+  SPENDING = 'SPENDING',
+  INCOME = 'INCOME',
 }
 
 export enum Currency {

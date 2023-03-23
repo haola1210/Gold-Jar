@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import type dayjs from 'dayjs';
 
 import Calendar from '@components/Calendar';
@@ -15,7 +15,7 @@ import { navLinks as links } from '@consts/links';
 import Layout from '@components/Layout';
 import { toast } from 'react-toastify';
 import { type MoneyNote } from '@interfaces/money.type';
-import { createNote } from '@services/money.service';
+import { createNote } from '@services/note.service';
 
 function Main() {
   const [selectDate, setSelectDate] = useState<dayjs.Dayjs | undefined>();
@@ -52,7 +52,6 @@ function Main() {
         },
       };
       try {
-        console.log(payload);
         const data = await createNote(payload);
         if (data) {
           toast('Tạo ghi chú thành công!');
