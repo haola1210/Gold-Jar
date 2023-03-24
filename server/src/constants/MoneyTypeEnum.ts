@@ -1,23 +1,10 @@
-// #region TagSelector
-export type Tag<T> = {
-  id: T;
-  title: string;
-  description: string;
-  color: string;
-  activeColor: string;
-  outlineColor: string;
-};
-
-export enum SpendingTagId {
+export enum SubType {
   EXPENSE = 'EXPENSE',
   SAVING = 'SAVING',
   EDUCATION = 'EDUCATION',
   ENJOYMENT = 'ENJOYMENT',
   INVESTMENT = 'INVESTMENT',
   DONATION = 'DONATION',
-}
-
-export enum IncomeTagId {
   SALARY = 'SALARY',
   SUB_JOB = 'SUB_JOB',
   PARENT = 'PARENT',
@@ -25,12 +12,12 @@ export enum IncomeTagId {
   LOTERY = 'LOTERY',
 }
 
+export enum Type {
+  SPENDING = 'SPENDING',
+  INCOME = 'INCOME',
+}
+
 export enum Currency {
   DOLLAR = 'DOLLAR',
   VND = 'VND',
 }
-
-export type SpendingTag = Tag<SpendingTagId>;
-export type IncomeTag = Tag<IncomeTagId>;
-
-// #endregion

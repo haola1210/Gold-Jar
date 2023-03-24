@@ -21,6 +21,7 @@ const pages = [
   'Identify',
   'RetrievalPassword',
   'Welcome',
+  'EditNote',
 ];
 
 const Pages = pages.reduce<IPages>((P: IPages, p) => {
@@ -40,7 +41,7 @@ function RoutesContainer() {
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route
-            path='/detail/:date'
+            path='/detail'
             element={<Pages.Detail />}
           />
           <Route
@@ -50,6 +51,10 @@ function RoutesContainer() {
           <Route
             path='/'
             element={<Pages.Root />}
+          />
+          <Route
+            path='/edit-note/:id'
+            element={<Pages.EditNote />}
           />
         </Route>
 

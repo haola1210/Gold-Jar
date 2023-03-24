@@ -14,7 +14,7 @@ export type CollapseContextProps = {
 
 export interface IPanelProps {
   header?: ReactNode;
-  panelKey: string | number;
+  panelKey?: string | number;
   children: ReactNode;
   suffixActive?: ReactNode;
   suffixInactive?: ReactNode;

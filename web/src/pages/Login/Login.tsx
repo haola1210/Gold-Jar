@@ -8,6 +8,7 @@ import { converError } from '@utils/convertError';
 import { useFormik } from 'formik';
 import { type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 const schema = Yup.object().shape({
@@ -41,6 +42,7 @@ const Login = () => {
         localStorage.setItem('access_token', accessToken);
         navigate(localStorage.getItem('oldPath') ?? `/`, { replace: true });
         localStorage.removeItem('oldPath');
+        toast('Đăng nhập thành công!');
       } catch (error) {
         const errorMessage = converError(error);
         formik.setErrors(errorMessage);

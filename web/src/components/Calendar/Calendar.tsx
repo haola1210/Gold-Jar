@@ -5,7 +5,7 @@ import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/
 import { rangeWithKey } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
 import CalendarHeader from './components/CalendarHeader';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { legend, weekDays } from './consts';
 import { type ICalendar } from './types';
 import DateCell from './components/DateCell';
@@ -25,6 +25,7 @@ function Calendar({ onChange }: ICalendar) {
   const [day, setDay] = useState(() => dayjs());
   const [selectedDate, selectDate] = useState<dayjs.Dayjs | undefined>(() => day);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     onChange?.(selectedDate);
@@ -77,14 +78,17 @@ function Calendar({ onChange }: ICalendar) {
     // console.log(selectedDate, dateObject, dateObject.isSame(selectedDate, 'date'));
     if (selectedDate && dateObject.isSame(selectedDate, 'date')) {
       //
-      navigateDetail('12-10-2000');
+      navigateDetail(
+        `?day=${selectedDate.date()}&month=${selectedDate.month()}&year=${selectedDate.year()}`,
+      );
     } else {
       selectDate(dateObject);
     }
   };
 
   const navigateDetail = useCallback((date: string) => {
-    navigate(`/detail/${date}`);
+    localStorage.setItem(`oldPath`, location.pathname);
+    navigate(`/detail${date}`);
   }, []);
 
   // Optimized ranges
