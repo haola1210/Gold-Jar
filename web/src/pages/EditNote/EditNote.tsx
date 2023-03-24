@@ -108,7 +108,7 @@ const EditNote = () => {
   return (
     <Layout>
       <div className='h-full w-full overflow-y-auto'>
-        <div className='inline-block mt-2 mb-1 font-medium text-3xl ml-2'>Chỉnh sửa ghi chú</div>
+        <div className='inline-block mt-2 mb-1 font-medium text-3xl puml-2'>Chỉnh sửa ghi chú</div>
         <div className='px-2'>
           <div className='flex align-center justify-center gap-1'></div>
           <span className='inline-block mt-2 mb-1 font-medium'>
