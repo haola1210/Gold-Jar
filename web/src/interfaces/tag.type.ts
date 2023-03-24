@@ -8,7 +8,7 @@ export type Tag<T> = {
   outlineColor: string;
 };
 
-export const enum SpendingTagId {
+export enum SpendingTagId {
   EXPENSE = 'EXPENSE',
   SAVING = 'SAVING',
   EDUCATION = 'EDUCATION',
@@ -17,7 +17,7 @@ export const enum SpendingTagId {
   DONATION = 'DONATION',
 }
 
-export const enum IncomeTagId {
+export enum IncomeTagId {
   SALARY = 'SALARY',
   SUB_JOB = 'SUB_JOB',
   PARENT = 'PARENT',

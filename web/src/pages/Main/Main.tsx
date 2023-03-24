@@ -7,10 +7,16 @@ import CuncerencyInput from '@components/CuncerencyInput';
 import TagSelector from '@components/TagSelector';
 import NavBar from '@components/NavBar';
 
-import { Currency, type IncomeTag, type SpendingTag } from '@interfaces/tag.type';
+import {
+  Currency,
+  IncomeTagId,
+  SpendingTagId,
+  type IncomeTag,
+  type SpendingTag,
+} from '@interfaces/tag.type';
 import { useParams } from 'react-router-dom';
 import { MoneyTypeBadge } from '@components/Badges';
-import { type ActionType } from '@interfaces/action.type';
+import { ActionType } from '@interfaces/action.type';
 import { navLinks as links } from '@consts/links';
 import Layout from '@components/Layout';
 import { toast } from 'react-toastify';
@@ -40,8 +46,16 @@ function Main() {
     }
 
     if (tag && value && selectDate) {
+      let type = ActionType.SPENDING;
+      if (tag.id in SpendingTagId) {
+        type = ActionType.SPENDING;
+      } else if (tag.id in IncomeTagId) {
+        type = ActionType.INCOME;
+      }
+
       const payload: MoneyNote = {
-        type: tag.id,
+        type,
+        subType: tag.id,
         amount: Number(value),
         description,
         unit: Currency.VND,

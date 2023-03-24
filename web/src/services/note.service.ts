@@ -13,5 +13,10 @@ export const getDetail = async (day: string, month: string, year: string) => {
 
 export const getDetailById = async (id: string) => {
   const data = await privateInstance.get(`/note/${id}`);
-  return data;
+  return data.data as MoneyNote;
+};
+
+export const updateNote = async (id: string, payload: MoneyNote) => {
+  const data = await privateInstance.put(`/note/${id}`, payload);
+  return data.data as MoneyNote;
 };

@@ -1,8 +1,6 @@
 import Collapse, { Panel } from '@components/Collapse';
 import Layout from '@components/Layout';
-import { ActionType } from '@interfaces/action.type';
 import { type MoneyNote } from '@interfaces/money.type';
-import { IncomeTagId, SpendingTagId } from '@interfaces/tag.type';
 import { getDetail } from '@services/note.service';
 import { deleteNote } from '@services/user.service';
 import { useEffect, useState } from 'react';
@@ -29,26 +27,6 @@ const Detail = () => {
       setData(data?.data);
     })();
   }, []);
-
-  const mapFromTagToType = (v: IncomeTagId | SpendingTagId) => {
-    const income: Record<IncomeTagId, ActionType.INCOME> = {
-      [IncomeTagId.SALARY]: ActionType.INCOME,
-      [IncomeTagId.SUB_JOB]: ActionType.INCOME,
-      [IncomeTagId.PARENT]: ActionType.INCOME,
-      [IncomeTagId.UN_INVESTMENT]: ActionType.INCOME,
-      [IncomeTagId.LOTERY]: ActionType.INCOME,
-    };
-    const spending: Record<SpendingTagId, ActionType.SPENDING> = {
-      [SpendingTagId.DONATION]: ActionType.SPENDING,
-      [SpendingTagId.SAVING]: ActionType.SPENDING,
-      [SpendingTagId.EDUCATION]: ActionType.SPENDING,
-      [SpendingTagId.ENJOYMENT]: ActionType.SPENDING,
-      [SpendingTagId.INVESTMENT]: ActionType.SPENDING,
-      [SpendingTagId.EXPENSE]: ActionType.SPENDING,
-    };
-
-    return income[v as IncomeTagId] ? income[v as IncomeTagId] : spending[v as SpendingTagId];
-  };
 
   const handleDeleteNote = async (id?: string) => {
     await deleteNote(id)
@@ -85,13 +63,13 @@ const Detail = () => {
                 panelKey={item?._id}
                 header={
                   <RecordHeader
-                    type={mapFromTagToType(item.type)}
-                    tagId={item.type}
+                    type={item.type}
+                    tagId={item.subType}
                     concurrency={item.amount}
                   />
                 }
                 key={item._id}
-                type={mapFromTagToType(item.type)}
+                type={item.type}
               >
                 <RecordBody
                   detail={item.description ?? ``}
