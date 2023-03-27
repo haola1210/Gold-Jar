@@ -22,6 +22,13 @@ export class NoteController {
   }
 
   @WithActiveTokenOnly()
+  @Get(`/month=:month&year=:year`)
+  async getNoteByMonth(@Req() req: IAttachedUserRequest) {
+    const { user } = req;
+    return this.noteService.getNoteByMonth(user[`_id`], +req.params[`month`], +req.params[`year`]);
+  }
+
+  @WithActiveTokenOnly()
   @Get(':id')
   async getNoteById(@Param(`id`) id) {
     return this.noteService.getNoteById(id);

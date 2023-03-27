@@ -88,4 +88,17 @@ export class NoteService {
       throw new BadRequestException();
     }
   }
+
+  async getNoteByMonth(id: string, month: number, year: number) {
+    try {
+      const noteList = await this.noteModel.find({
+        owner: id,
+        'forDate.month': month,
+        'forDate.year': year,
+      });
+      return noteList;
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
 }

@@ -20,3 +20,8 @@ export const updateNote = async (id: string, payload: MoneyNote) => {
   const data = await privateInstance.put(`/note/${id}`, payload);
   return data.data as MoneyNote;
 };
+
+export const getNoteByMonth = async (month: number, year: number) => {
+  const data = await privateInstance.get(`/note/month=${month}&year=${year}`);
+  return data.data as MoneyNote[];
+};

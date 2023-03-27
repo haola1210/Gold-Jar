@@ -1,7 +1,7 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Currency, SubType, Type } from 'src/constants/MoneyTypeEnum';
-import { IForDate } from 'src/features/Note/interfaces/IForDate';
+import { IForDate } from 'src/features/notes/interfaces/IForDate';
 
 export type NoteDocument = HydratedDocument<Note>;
 
