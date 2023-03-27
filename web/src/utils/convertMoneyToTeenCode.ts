@@ -1,5 +1,5 @@
 export const convertMoneyToTeenCode = (value: number) => {
-  if (value > 1000 && value < 1000000) {
+  if (value >= 1000 && value < 1000000) {
     return `${(value / 1000).toFixed(0)}k`;
   }
 
