@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import type dayjs from 'dayjs';
+import { useCallback, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 
 import Calendar from '@components/Calendar';
 import CuncerencyInput from '@components/CuncerencyInput';
@@ -21,16 +21,35 @@ import { navLinks as links } from '@consts/links';
 import Layout from '@components/Layout';
 import { toast } from 'react-toastify';
 import { type MoneyNote } from '@interfaces/money.type';
-import { createNote } from '@services/note.service';
+import { createNote, getNoteByMonth } from '@services/note.service';
+import { convertMoneyToTeenCode } from '@utils/convertMoneyToTeenCode';
 
 function Main() {
   const [selectDate, setSelectDate] = useState<dayjs.Dayjs | undefined>();
+  const [selectMonth, setSelectMonth] = useState<number>(() => dayjs().month());
+  const [selectYear, setSelectYear] = useState<number>(() => dayjs().year());
   const [value, setValue] = useState('');
   const [description, setDescription] = useState(``);
+  const [paymentList, setPaymentList] = useState<MoneyNote[]>([]);
 
   const handleSelectDate = useCallback((date: dayjs.Dayjs | undefined) => {
     setSelectDate(date);
   }, []);
+
+  const handleSelectMonth = useCallback((month: number) => {
+    setSelectMonth(month);
+  }, []);
+
+  const handleSelectYear = useCallback((year: number) => {
+    setSelectYear(year);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getNoteByMonth(selectMonth, selectYear);
+      setPaymentList(data);
+    })();
+  }, [selectMonth, setSelectYear]);
 
   const [tag, changeTag] = useState<IncomeTag | SpendingTag | undefined>(undefined);
 
@@ -71,6 +90,8 @@ function Main() {
           toast('Tạo ghi chú thành công!');
           setValue('');
           setDescription('');
+          const data = await getNoteByMonth(selectMonth, selectYear);
+          setPaymentList(data);
         }
       } catch (error) {
         toast('Có gì đó đang sai !');
@@ -85,7 +106,33 @@ function Main() {
   return (
     <Layout>
       <div className='h-full w-full overflow-y-auto'>
-        <Calendar onChange={handleSelectDate} />
+        <Calendar
+          onChange={handleSelectDate}
+          onChangeMonth={handleSelectMonth}
+          onChangeYear={handleSelectYear}
+          renderInCellThisMonth={(value) => {
+            let totalSpending = 0;
+            paymentList.forEach((item) => {
+              if (item.forDate.day === value + 1 && item.type === ActionType.SPENDING)
+                totalSpending += item.amount;
+            });
+            let totalIncoming = 0;
+            paymentList.forEach((item) => {
+              if (item.forDate.day === value + 1 && item.type === ActionType.INCOME)
+                totalIncoming += item.amount;
+            });
+            return (
+              <div className='flex flex-col'>
+                <div className='font-semibold text-red-400 w-full text-xs text-right mr-2'>
+                  {convertMoneyToTeenCode(totalSpending)}
+                </div>
+                <div className='font-semibold text-green-400 w-full text-xs text-right mr-2'>
+                  {convertMoneyToTeenCode(totalIncoming)}
+                </div>
+              </div>
+            );
+          }}
+        />
 
         <div className='flex justify-center mt-2'>
           <NavBar
