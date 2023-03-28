@@ -1,8 +1,7 @@
 import Collapse, { Panel } from '@components/Collapse';
 import Layout from '@components/Layout';
 import { type MoneyNote } from '@interfaces/money.type';
-import { getDetail } from '@services/note.service';
-import { deleteNote } from '@services/user.service';
+import { getDetail, deleteNote } from '@services/note.service';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';

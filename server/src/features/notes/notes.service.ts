@@ -7,7 +7,7 @@ import createMoneyNoteDTO from './interfaces/createNote.dto';
 import updateMoneyNoteDTO from './interfaces/updateNote.dto';
 
 @Injectable()
-export class NoteService {
+export class NotesService {
   constructor(@InjectModel(Note.name) private noteModel: Model<NoteDocument>) {}
 
   async createMoneyNote(createMoneyDTO: createMoneyNoteDTO, owner?: string) {

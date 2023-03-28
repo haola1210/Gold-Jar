@@ -4,58 +4,58 @@ import { Public, WithActiveTokenOnly } from '../auth/decorators/token-meta.decor
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { IAttachedUserRequest } from '../auth/interfaces/IAttachedUserRequest';
 import createMoneyNoteDTO from './interfaces/createNote.dto';
-import { NoteService } from './note.service';
+import { NotesService } from './notes.service';
 
 @UseGuards(AuthGuard)
-@Controller('note')
+@Controller('notes')
 @Public()
-export class NoteController {
-  constructor(private noteService: NoteService) {}
+export class NotesController {
+  constructor(private notesService: NotesService) {}
 
   @WithActiveTokenOnly()
   @Get(``)
-  async getNote(@Req() req: IAttachedUserRequest) {
+  async getOneDayNotes(@Req() req: IAttachedUserRequest) {
     const { day, month, year } = req.query;
     const { user } = req;
 
-    return this.noteService.getNote(day as string, month as string, year as string, user[`_id`]);
+    return this.notesService.getNote(day as string, month as string, year as string, user[`_id`]);
   }
 
   @WithActiveTokenOnly()
-  @Get(`/month=:month&year=:year`)
-  async getNoteByMonth(@Req() req: IAttachedUserRequest) {
+  @Get(`/:month-:year`)
+  async getNotesByMonth(@Req() req: IAttachedUserRequest) {
     const { user } = req;
-    return this.noteService.getNoteByMonth(user[`_id`], +req.params[`month`], +req.params[`year`]);
+    return this.notesService.getNoteByMonth(user[`_id`], +req.params[`month`], +req.params[`year`]);
   }
 
   @WithActiveTokenOnly()
   @Get(':id')
   async getNoteById(@Param(`id`) id) {
-    return this.noteService.getNoteById(id);
+    return this.notesService.getNoteById(id);
   }
 
   @WithActiveTokenOnly()
-  @Post('')
+  @Post('create-one')
   async createNote(@Body() createMoneyNote: createMoneyNoteDTO, @Req() req: IAttachedUserRequest) {
     const { user } = req;
-    return this.noteService.createMoneyNote(createMoneyNote, user[`_id`]);
+    return this.notesService.createMoneyNote(createMoneyNote, user[`_id`]);
   }
 
   @WithActiveTokenOnly()
   @Put(`:id`)
   async updateNote(@Body() updateMoneyNoteDTO, @Param(`id`) id) {
-    return this.noteService.updateMoneyNote(updateMoneyNoteDTO, id);
+    return this.notesService.updateMoneyNote(updateMoneyNoteDTO, id);
   }
 
   @WithActiveTokenOnly()
   @Delete('note-all')
   async deleteAllRecord() {
-    return this.noteService.deleteAllRecord();
+    return this.notesService.deleteAllRecord();
   }
 
   @WithActiveTokenOnly()
   @Delete(`:id`)
   async deleteNote(@Param(`id`) id) {
-    return this.noteService.deleteNote(id);
+    return this.notesService.deleteNote(id);
   }
 }

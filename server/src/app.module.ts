@@ -6,7 +6,7 @@ import { AuthModule } from './features/auth/auth.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { APP_GUARD } from '@nestjs/core';
 import { ProxyGuard } from './features/auth/guards/proxy.guard';
-import { MoneyModule } from './features/Note/note.module';
+import { NotesModule } from './features/notes/notes.module';
 
 @Module({
   providers: [
@@ -18,7 +18,7 @@ import { MoneyModule } from './features/Note/note.module';
   imports: [
     UsersModule,
     AuthModule,
-    MoneyModule,
+    NotesModule,
     //
     CacheModule.registerAsync({
       inject: [ConfigService],
