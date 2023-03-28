@@ -5,7 +5,7 @@ import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/
 import { rangeWithKey } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
 import CalendarHeader from './components/CalendarHeader';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { legend, weekDays } from './consts';
 import { type ICalendar } from './types';
 import DateCell from './components/DateCell';
@@ -21,14 +21,26 @@ const today = dayjs();
  *
  * So we should memo this component.
  */
-function Calendar({ onChange }: ICalendar) {
+function Calendar({ onChange, onChangeMonth, onChangeYear, renderInCellThisMonth }: ICalendar) {
   const [day, setDay] = useState(() => dayjs());
   const [selectedDate, selectDate] = useState<dayjs.Dayjs | undefined>(() => day);
+  const [selectedMonth, setSelectedMonth] = useState<number>(day.month());
+  const [selectedYear, setSelectedYear] = useState<number>(day.year());
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     onChange?.(selectedDate);
   }, [selectedDate]);
+
+  useEffect(() => {
+    onChangeMonth?.(selectedMonth);
+  }, [selectedMonth]);
+
+  useEffect(() => {
+    onChangeYear?.(selectedYear);
+  }, [selectedYear]);
 
   //
   const thisYear = useMemo(() => day.year(), [day.year()]);
@@ -52,9 +64,21 @@ function Calendar({ onChange }: ICalendar) {
     if (type === 'NEXT') {
       setDay(day.add(1, 'month'));
       selectDate(undefined);
+      if (selectedMonth === 11) {
+        setSelectedMonth(0);
+        setSelectedYear((prev) => ++prev);
+      } else {
+        setSelectedMonth((prev) => ++prev);
+      }
     } else if (type === 'BACK') {
       setDay(day.subtract(1, 'month'));
       selectDate(undefined);
+      if (selectedMonth === 0) {
+        setSelectedMonth(11);
+        setSelectedYear((prev) => --prev);
+      } else {
+        setSelectedMonth((prev) => --prev);
+      }
     }
   };
 
@@ -77,14 +101,17 @@ function Calendar({ onChange }: ICalendar) {
     // console.log(selectedDate, dateObject, dateObject.isSame(selectedDate, 'date'));
     if (selectedDate && dateObject.isSame(selectedDate, 'date')) {
       //
-      navigateDetail('12-10-2000');
+      navigateDetail(
+        `?day=${selectedDate.date()}&month=${selectedDate.month()}&year=${selectedDate.year()}`,
+      );
     } else {
       selectDate(dateObject);
     }
   };
 
   const navigateDetail = useCallback((date: string) => {
-    navigate(`/detail/${date}`);
+    localStorage.setItem(`oldPath`, location.pathname);
+    navigate(`/detail${date}`);
   }, []);
 
   // Optimized ranges
@@ -157,28 +184,31 @@ function Calendar({ onChange }: ICalendar) {
           })}
 
           {/* days of this month */}
-          {datesInThisMonth.map(({ value, key }) => (
-            <DateCell
-              key={key}
-              className={`${
-                shalowCompareArray(
-                  [today.date(), today.month(), today.year()],
-                  [value + 1, thisMonth, thisYear],
-                )
-                  ? 'bg-pink-100'
-                  : ''
-              } ${
-                shalowCompareArray(
-                  [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
-                  [value + 1, thisMonth, thisYear],
-                )
-                  ? '!bg-green-100'
-                  : ''
-              }`}
-              onClick={() => handleSelectDate(value + 1, thisMonth + 1)}
-              date={value + 1}
-            />
-          ))}
+          {datesInThisMonth.map(({ value, key }) => {
+            return (
+              <DateCell
+                key={key}
+                className={`${
+                  shalowCompareArray(
+                    [today.date(), today.month(), today.year()],
+                    [value + 1, thisMonth, thisYear],
+                  )
+                    ? 'bg-pink-100'
+                    : ''
+                } ${
+                  shalowCompareArray(
+                    [selectedDate?.date(), selectedDate?.month(), selectedDate?.year()],
+                    [value + 1, thisMonth, thisYear],
+                  )
+                    ? '!bg-green-100'
+                    : ''
+                }`}
+                onClick={() => handleSelectDate(value + 1, thisMonth + 1)}
+                date={value + 1}
+                belowUI={renderInCellThisMonth(value)}
+              />
+            );
+          })}
 
           {/* days of next month */}
           {datesInNextMonth.map(({ value, key }) => {

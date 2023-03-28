@@ -1,11 +1,14 @@
 import { useAuthContext } from '@contexts/AuthContext';
 import { me } from '@services/user.service';
 import { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const PrivateRoute = () => {
   const auth = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  localStorage.setItem(`currentPath`, location.pathname);
 
   useEffect(() => {
     (async () => {
@@ -14,6 +17,7 @@ const PrivateRoute = () => {
           const user = await me();
           auth.login?.(user);
         } catch (error) {
+          localStorage.setItem(`oldPath`, location.pathname);
           navigate('/login', { replace: true });
         }
       }

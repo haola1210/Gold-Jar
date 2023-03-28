@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { config } from 'process';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

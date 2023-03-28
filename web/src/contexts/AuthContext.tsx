@@ -23,9 +23,7 @@ const AuthContext = createContext<IAuthContext>({
 
 export const AuthContextProvider = ({ children }: IAuthContextProps) => {
   const [user, setUser] = useState<User | undefined>(undefined);
-
   const login = useCallback((user: User) => {
-    console.log(user);
     setUser(user);
   }, []);
 
