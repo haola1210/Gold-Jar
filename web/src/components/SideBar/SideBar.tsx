@@ -4,12 +4,29 @@ import AvatarIcon from '@assets/AvatarIcon';
 import { returnSessionOfDate } from './utils';
 import { navLinks } from '@consts/links';
 import NavBar from '@components/NavBar';
+import Divider from '@components/Divider';
+import Button from '@components/Button';
+import { useAuthContext } from '@contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const SideBar = () => {
   const modalContext = useModalContext();
+  const navigate = useNavigate();
+
+  const { logout } = useAuthContext();
 
   const closeModal = () => {
     modalContext?.toggle();
+  };
+
+  const handleOnClickLogout = () => {
+    logout?.();
+    localStorage.removeItem(`access_token`);
+    navigate('/login');
+  };
+
+  const handleFeedback = () => {
+    navigate('/feedback');
   };
 
   return (
@@ -34,6 +51,22 @@ const SideBar = () => {
           row={false}
           childClass='rounded-lg !p-2'
         />
+
+        <Divider />
+        <div className='flex flex-col gap-2'>
+          <Button
+            className='bg-gray-200'
+            onClick={handleFeedback}
+          >
+            Yêu cầu và phản hồi
+          </Button>
+          <Button
+            className='bg-gray-200'
+            onClick={handleOnClickLogout}
+          >
+            Đăng xuất
+          </Button>
+        </div>
       </div>
       {/* right (mask) */}
       <div

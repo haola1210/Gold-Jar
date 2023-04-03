@@ -10,11 +10,13 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 import { Public, WithActiveTokenOnly } from '../auth/decorators/token-meta.decorators';
 import { IAttachedUserRequest } from '../auth/interfaces/IAttachedUserRequest';
 import { ResponsedUser } from './serialized-entities/ResponsedUser';
+import { UsersService } from './users.service';
 
 @UseGuards(AuthGuard)
 @Controller('users')
 @Public()
 export class UsersController {
+  constructor(private userServices: UsersService) {}
   //
 
   @Get('me')

@@ -54,6 +54,7 @@ const RetrievalPassword = () => {
             onChange={handleChangeForm}
             name='username'
             errorMessage={formik.errors.username}
+            label='Tên đăng nhập'
           />
         </div>
         <div>
@@ -62,24 +63,17 @@ const RetrievalPassword = () => {
             onChange={handleChangeForm}
             name='email'
             errorMessage={formik.errors.email}
+            label='Email'
           />
         </div>
-        <div>
-          <InputWithError
-            placeholder='Số điện thoại'
-            onChange={handleChangeForm}
-            name='phone'
-            errorMessage={formik.errors.phone}
-          />
-        </div>
-        <div>
+        {/* <div>
           <SelectWithError
             options={methods}
             placeholder='Nhận mã qua'
             onChange={handleChangeSelect}
             errorMessage={formik.errors.byPass}
           />
-        </div>
+        </div> */}
         <div className='mt-8 text-right'>
           <Button
             className='bg-cyan-500 text-white mr-4'
