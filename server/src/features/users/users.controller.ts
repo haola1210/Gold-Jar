@@ -5,14 +5,11 @@ import {
   Req,
   UseInterceptors,
   ClassSerializerInterceptor,
-  Post,
-  Body,
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { Public, WithActiveTokenOnly } from '../auth/decorators/token-meta.decorators';
 import { IAttachedUserRequest } from '../auth/interfaces/IAttachedUserRequest';
 import { ResponsedUser } from './serialized-entities/ResponsedUser';
-import recoveryPassword from './serialized-entities/recoveryPassword.dto';
 import { UsersService } from './users.service';
 
 @UseGuards(AuthGuard)

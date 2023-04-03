@@ -17,7 +17,7 @@ export class User {
   @Prop({ required: true, trim: true, minlength: 8 })
   password: string;
 
-  @Prop({})
+  @Prop({ trim: true, default: undefined })
   linked_fb_userid: string;
 }
 

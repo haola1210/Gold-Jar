@@ -5,6 +5,7 @@ import { Response, Request } from 'express';
 import LoginDTO from './interfaces/login.dto';
 import { WithExpiredTokenOnly, WithoutTokenOnly } from './decorators/token-meta.decorators';
 import { AuthGuard } from './guards/auth.guard';
+import { LoginWithFacebookDTO } from './interfaces/loginWithFacebook.dto';
 
 @UseGuards(AuthGuard)
 @Controller('auth')
@@ -28,5 +29,14 @@ export class AuthController {
   @Get('refresh-token')
   async refreshToken(@Req() req: Request) {
     return this.authService.processRefreshToken(req);
+  }
+
+  @WithoutTokenOnly()
+  @Post('login-with-facebook')
+  async loginWithFacebook(
+    @Body() loginWithFacebookDTO: LoginWithFacebookDTO,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.authService.loginWithFacebookProcess(loginWithFacebookDTO, res);
   }
 }

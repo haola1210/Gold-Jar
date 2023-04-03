@@ -12,6 +12,7 @@ import { verify } from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import LoginDTO from './interfaces/login.dto';
 import { registerDTO } from './interfaces/register.dto';
+import { LoginWithFacebookDTO } from './interfaces/loginWithFacebook.dto';
 
 @Injectable()
 export class AuthService {
@@ -173,7 +174,7 @@ export class AuthService {
           username: user.username,
         },
         this.ATSecret,
-        { expiresIn: '2m' },
+        { expiresIn: '5m' },
       );
 
       return { accessToken };
@@ -181,5 +182,9 @@ export class AuthService {
     } catch (error) {
       throw error;
     }
+  }
+
+  async loginWithFacebookProcess(loginWithFacebookDTO: LoginWithFacebookDTO, res: Response) {
+    return ``;
   }
 }
