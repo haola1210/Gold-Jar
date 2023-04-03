@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import FacebookLogin from 'react-facebook-login';
-import { FacebookRes } from '@interfaces/FacebookRes';
+import { type FacebookRes } from '@interfaces/FacebookRes';
 
 const schema = Yup.object().shape({
   username: Yup.string()
@@ -125,7 +125,7 @@ const Login = () => {
             appId='605772241438402'
             autoLoad
             fields='name,email,picture'
-            // onClick={(e: any) => console.log(e)}
+            // OnClick={(e: any) => console.log(e)}
             callback={handleResLoginFB}
             isMobile
             cssClass={`bg-cyan-500 text-white`}
