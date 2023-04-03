@@ -16,6 +16,9 @@ export class User {
 
   @Prop({ required: true, trim: true, minlength: 8 })
   password: string;
+
+  @Prop({})
+  linked_fb_userid: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
