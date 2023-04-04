@@ -10,8 +10,10 @@ import { type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import FacebookLogin from 'react-facebook-login';
-import { FacebookRes } from '@interfaces/FacebookRes';
+import FacebookLogin, {
+  type ReactFacebookFailureResponse,
+  type ReactFacebookLoginInfo,
+} from 'react-facebook-login';
 
 const schema = Yup.object().shape({
   username: Yup.string()
@@ -57,7 +59,7 @@ const Login = () => {
     void formik.setFieldValue(name, value);
   };
 
-  const handleResLoginFB = (res: FacebookRes) => {
+  const handleResLoginFB = (res: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
     console.log('123', res);
   };
 
@@ -125,7 +127,7 @@ const Login = () => {
             appId='605772241438402'
             autoLoad
             fields='name,email,picture'
-            // onClick={(e: any) => console.log(e)}
+            // OnClick={(e: any) => console.log(e)}
             callback={handleResLoginFB}
             isMobile
             cssClass={`bg-cyan-500 text-white`}
