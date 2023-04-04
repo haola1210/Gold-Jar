@@ -14,7 +14,10 @@ function Navbar({
     : `grid grid-cols-1 grid-rows-${links.length} w-full gap-4`;
 
   return (
-    <nav className={className}>
+    <nav
+      style={{ marginBottom: 'auto' }}
+      className={className}
+    >
       {links.map(({ title, to, key }, index) => (
         <NavLink
           className={({ isActive }) => `

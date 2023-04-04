@@ -58,7 +58,7 @@ const SideBar = () => {
             className='bg-gray-200'
             onClick={handleFeedback}
           >
-            Yêu cầu và phản hồi
+            Feedback hoặc Đề xuất tính năng
           </Button>
           <Button
             className='bg-gray-200'
