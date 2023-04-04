@@ -13,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { registerDTO } from '../auth/interfaces/register.dto';
 import LoginDTO from '../auth/interfaces/login.dto';
 import { Cache } from 'cache-manager';
+import { LoginWithFacebookDTO } from '../auth/interfaces/loginWithFacebook.dto';
 
 @Injectable()
 export class UsersService {
@@ -88,6 +89,46 @@ export class UsersService {
 
       return user;
       //
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findUserByEmail(email: string) {
+    try {
+      const user = await this.userModel.findOne({ email });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findAndUpdateLinkedFB(id: string, user: LoginWithFacebookDTO) {
+    try {
+      const userUpdated = await this.userModel.findByIdAndUpdate(id, {
+        linked_fb_userid: user.linked_fb_userid,
+      });
+      return userUpdated;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async createOneFBUser(loginWithFacebookDTO: LoginWithFacebookDTO) {
+    try {
+      const user = new this.userModel(loginWithFacebookDTO);
+      await user.save();
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findAndVerifyFBUser(linkedFbUserid: string) {
+    try {
+      const FbUser = await this.userModel.findOne({ linked_fb_userid: linkedFbUserid });
+      return FbUser;
     } catch (error) {
       throw error;
     }

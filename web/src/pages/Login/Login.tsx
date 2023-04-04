@@ -2,18 +2,16 @@ import Button from '@components/Button';
 import H1 from '@components/H1';
 import InputWithError from '@components/InputWithError';
 import LoginLayout from '@components/LoginLayout';
-import { type ILoginUser } from '@interfaces/user.type';
-import { login } from '@services/auth.service';
+import { type ILoginWithFBUser, type ILoginUser } from '@interfaces/user.type';
+import { login, loginWithFacebook } from '@services/auth.service';
 import { converError } from '@utils/convertError';
 import { useFormik } from 'formik';
 import { type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import FacebookLogin, {
-  type ReactFacebookFailureResponse,
-  type ReactFacebookLoginInfo,
-} from 'react-facebook-login';
+import { type ReactFacebookLoginInfo } from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 const schema = Yup.object().shape({
   username: Yup.string()
@@ -59,8 +57,23 @@ const Login = () => {
     void formik.setFieldValue(name, value);
   };
 
-  const handleResLoginFB = (res: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
-    console.log('123', res);
+  const handleResLoginFB = async (res: ReactFacebookLoginInfo) => {
+    const user: ILoginWithFBUser = {
+      username: res.email ?? ``,
+      name: res.name ?? ``,
+      email: res.email ?? ``,
+      linked_fb_userid: res.userID,
+    };
+    try {
+      const { accessToken } = await loginWithFacebook(user);
+      localStorage.setItem('access_token', accessToken);
+      navigate(localStorage.getItem('oldPath') ?? `/`, { replace: true });
+      localStorage.removeItem('oldPath');
+      toast('Đăng nhập thành công!');
+    } catch (error) {
+      const errorMessage = converError(error);
+      formik.setErrors(errorMessage);
+    }
   };
 
   return (
@@ -117,23 +130,26 @@ const Login = () => {
         >
           Đăng ký
         </Button>
-        <Button
-          className='bg-cyan-500 text-white'
-          style={{
-            width: '100px',
-          }}
-        >
-          <FacebookLogin
-            appId='605772241438402'
-            autoLoad
-            fields='name,email,picture'
-            // OnClick={(e: any) => console.log(e)}
-            callback={handleResLoginFB}
-            isMobile
-            cssClass={`bg-cyan-500 text-white`}
-            textButton={`Facebook`}
-          />
-        </Button>
+        <FacebookLogin
+          appId='605772241438402'
+          fields='name,email,picture'
+          callback={handleResLoginFB}
+          isMobile
+          cssClass={`bg-cyan-500 text-white`}
+          reAuthenticate
+          render={(renderProps) => (
+            <Button
+              className='bg-cyan-500 text-white'
+              style={{
+                width: '100px',
+              }}
+              onClick={renderProps.onClick}
+            >
+              Facebook
+            </Button>
+          )}
+        />
+
         <Button
           className='bg-red-500 text-white'
           style={{
