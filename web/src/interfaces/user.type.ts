@@ -13,3 +13,10 @@ export interface ILoginUser {
   username: string;
   password: string;
 }
+
+export interface ILoginWithFBUser {
+  username: string;
+  email: string;
+  name: string;
+  linked_fb_userid: string;
+}
