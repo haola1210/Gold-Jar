@@ -29,6 +29,8 @@ const SideBar = () => {
     navigate('/feedback');
   };
 
+  const auth = useAuthContext();
+
   return (
     <div className='h-screen w-screen flex'>
       {/* left (content) */}
@@ -39,7 +41,7 @@ const SideBar = () => {
               style={{ width: 40, height: 40 }}
               className={'bg-zinc-50 p-1 rounded-full ring-4 ring-offset-2 ring-lime-400 '}
             />
-            <span className='font-bold text-lg text-gray-700'>Vo Van Hao</span>
+            <span className='font-bold text-lg text-gray-700'>{auth.user?.name}</span>
           </div>
           <div className='font-bold text-sm text-gray-400'>
             Chào buổi {returnSessionOfDate()}, bạn khoẻ hông ?

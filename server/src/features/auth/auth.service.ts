@@ -187,10 +187,26 @@ export class AuthService {
 
   async loginWithFacebookProcess(loginWithFacebookDTO: LoginWithFacebookDTO, res: Response) {
     try {
-      const userFoundByEmail = await this.usersService.findUserByEmail(loginWithFacebookDTO.email);
-      if (userFoundByEmail) {
-        // if find email exist but linked_fb_userid is undefined
-        if (!userFoundByEmail.linked_fb_userid) {
+      const userFoundByLinkedFB = await this.usersService.findAndVerifyFBUser(
+        loginWithFacebookDTO.linked_fb_userid,
+      );
+
+      if (userFoundByLinkedFB) {
+        const { accessToken, refreshToken } = await this.generateTokens({
+          _id: userFoundByLinkedFB._id,
+          name: userFoundByLinkedFB.name,
+          email: userFoundByLinkedFB.email,
+          username: userFoundByLinkedFB.username,
+        });
+
+        this.storeRefreshToken(res, refreshToken);
+
+        return { accessToken };
+      } else {
+        const userFoundByEmail = await this.usersService.findUserByEmail(
+          loginWithFacebookDTO.email,
+        );
+        if (userFoundByEmail) {
           const user = await this.usersService.findAndUpdateLinkedFB(
             `${userFoundByEmail._id}`,
             loginWithFacebookDTO,
@@ -206,48 +222,17 @@ export class AuthService {
 
           return { accessToken };
         }
-
-        // if find email exist but linked_fb_userid defined
+        const user = await this.usersService.createOneFBUser(loginWithFacebookDTO);
         const { accessToken, refreshToken } = await this.generateTokens({
-          _id: userFoundByEmail._id,
-          name: userFoundByEmail.name,
-          email: userFoundByEmail.email,
-          username: userFoundByEmail.username,
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          username: user.username,
         });
 
         this.storeRefreshToken(res, refreshToken);
 
         return { accessToken };
-      } else {
-        const FbUser = await this.usersService.findAndVerifyFBUser(
-          loginWithFacebookDTO.linked_fb_userid,
-        );
-        console.log(FbUser);
-
-        // if user already logged
-        if (FbUser) {
-          const { accessToken, refreshToken } = await this.generateTokens({
-            _id: FbUser._id,
-            name: FbUser.name,
-            email: FbUser.email,
-            username: FbUser.username,
-          });
-          this.storeRefreshToken(res, refreshToken);
-
-          return { accessToken };
-        } else {
-          const user = await this.usersService.createOneFBUser(loginWithFacebookDTO);
-          const { accessToken, refreshToken } = await this.generateTokens({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            username: user.username,
-          });
-
-          this.storeRefreshToken(res, refreshToken);
-
-          return { accessToken };
-        }
       }
     } catch (error) {
       throw new BadRequestException();
