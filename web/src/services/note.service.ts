@@ -33,3 +33,10 @@ export const deleteNote = async (id?: string) => {
   const { data } = await privateInstance.delete(`${rootPath}/${id ? id : ``}`);
   return data as User;
 };
+
+export const noteReport = async (startTime: number, toTime: number, type: string) => {
+  const { data } = await privateInstance.get(
+    `${rootPath}/note-report?startTime=${startTime}&toTime=${toTime}&type=${type}`,
+  );
+  return data as MoneyNote[];
+};

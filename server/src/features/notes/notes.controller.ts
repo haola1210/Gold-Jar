@@ -10,6 +10,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { ReportType } from 'src/constants/ReportTypeEnum';
 import { Public, WithActiveTokenOnly } from '../auth/decorators/token-meta.decorators';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { IAttachedUserRequest } from '../auth/interfaces/IAttachedUserRequest';
@@ -34,11 +35,10 @@ export class NotesController {
   @WithActiveTokenOnly()
   @Get(`note-report`)
   async reportNote(
-    @Query() query: { startTime: string; toTime: string },
+    @Query() query: { startTime: string; toTime: string; type: ReportType },
     @Req() req: IAttachedUserRequest,
   ) {
-    console.log(typeof query.startTime);
-    return this.notesService.noteReport(query.startTime, query.toTime, req.user[`_id`]);
+    return this.notesService.noteReport(query.startTime, query.toTime, req.user[`_id`], query.type);
   }
 
   @WithActiveTokenOnly()

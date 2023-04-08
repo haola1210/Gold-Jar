@@ -6,6 +6,7 @@ import { Note, NoteDocument } from 'src/schemas/note.schema';
 import createMoneyNoteDTO from './interfaces/createNote.dto';
 import updateMoneyNoteDTO from './interfaces/updateNote.dto';
 import * as moment from 'moment';
+import { ReportType } from 'src/constants/ReportTypeEnum';
 
 @Injectable()
 export class NotesService {
@@ -103,20 +104,22 @@ export class NotesService {
     }
   }
 
-  async noteReport(startTime: string, toTime: string, owner: string) {
+  async noteReport(startTime: string, toTime: string, owner: string, type: ReportType) {
     try {
-      console.log(typeof +startTime);
-      const fromDate = moment(+startTime);
-      const toDate = moment(+toTime);
-      console.log({ fromDate, toDate });
-      const noteList = await this.noteModel.find({
-        createdAt: {
-          $gte: fromDate,
-          $lte: toDate,
-        },
-        owner: owner,
-      });
-      return noteList;
+      switch (type) {
+        case ReportType.DAY:
+          const day = moment(+startTime);
+          console.log(day.date(), day.month(), day.year());
+          const noteList = await this.noteModel.find({
+            'forDate.day': day.date(),
+            'forDate.month': day.month(),
+            'forDate.year': day.year(),
+            owner: owner,
+          });
+          return noteList;
+        default:
+          return ``;
+      }
     } catch (error) {
       throw error;
     }
