@@ -3,12 +3,17 @@ import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
+interface IPieChartProps {
+  date?: Date | null;
+}
+
+const PieChart = ({ date }: IPieChartProps) => {
+  console.log(date);
   const data = {
     labels: ['Thu', 'Chi'],
     datasets: [
       {
-        label: '# of Votes',
+        label: '',
         data: [12, 19],
         backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
         borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],

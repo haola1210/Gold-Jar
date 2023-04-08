@@ -45,6 +45,10 @@ export const data1 = {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+interface ILineChartProps {
+  // date: Date | null;
+}
+
 const LineChart = () => {
   return (
     <Line

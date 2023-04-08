@@ -3,9 +3,7 @@ import H1 from '@components/H1';
 import Layout from '@components/Layout';
 import Select from '@components/Select';
 import { chartType } from '@consts/chart-type';
-
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
 const LineChart = React.lazy(async () => import('./LineChart'));
 const PieChart = React.lazy(async () => import('./PieChart'));
@@ -17,7 +15,7 @@ const Report = () => {
   const renderChart = () => {
     switch (chart) {
       case 0:
-        return <PieChart />;
+        return <PieChart date={selectedDate} />;
       case 1:
       case 2:
       case 3:

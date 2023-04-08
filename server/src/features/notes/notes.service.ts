@@ -1,10 +1,11 @@
-import { BadRequestException, Get, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { DeleteResult } from 'mongodb';
 import { Model } from 'mongoose';
 import { Note, NoteDocument } from 'src/schemas/note.schema';
 import createMoneyNoteDTO from './interfaces/createNote.dto';
 import updateMoneyNoteDTO from './interfaces/updateNote.dto';
+import * as moment from 'moment';
 
 @Injectable()
 export class NotesService {
@@ -99,6 +100,25 @@ export class NotesService {
       return noteList;
     } catch (error) {
       throw new BadRequestException();
+    }
+  }
+
+  async noteReport(startTime: string, toTime: string, owner: string) {
+    try {
+      console.log(typeof +startTime);
+      const fromDate = moment(+startTime);
+      const toDate = moment(+toTime);
+      console.log({ fromDate, toDate });
+      const noteList = await this.noteModel.find({
+        createdAt: {
+          $gte: fromDate,
+          $lte: toDate,
+        },
+        owner: owner,
+      });
+      return noteList;
+    } catch (error) {
+      throw error;
     }
   }
 }

@@ -15,7 +15,7 @@ function Navbar({
 
   return (
     <nav
-      style={{ marginBottom: 'auto' }}
+      // style={{ marginBottom: 'auto' }}
       className={className}
     >
       {links.map(({ title, to, key }, index) => (

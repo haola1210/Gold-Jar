@@ -53,6 +53,15 @@ const SideBar = () => {
           row={false}
           childClass='rounded-lg !p-2'
         />
+        <div style={{ marginBottom: 'auto' }}>
+          <Divider />
+          <Button
+            onClick={() => navigate('/report')}
+            className='bg-gray-200 w-full'
+          >
+            Thống kê
+          </Button>
+        </div>
 
         <Divider />
         <div className='flex flex-col gap-2'>
