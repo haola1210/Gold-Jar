@@ -1,5 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { get } from 'http';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { ReportType } from 'src/constants/ReportTypeEnum';
 import { Public, WithActiveTokenOnly } from '../auth/decorators/token-meta.decorators';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { IAttachedUserRequest } from '../auth/interfaces/IAttachedUserRequest';
@@ -13,19 +24,12 @@ export class NotesController {
   constructor(private notesService: NotesService) {}
 
   @WithActiveTokenOnly()
-  @Get(``)
-  async getOneDayNotes(@Req() req: IAttachedUserRequest) {
-    const { day, month, year } = req.query;
-    const { user } = req;
-
-    return this.notesService.getNote(day as string, month as string, year as string, user[`_id`]);
-  }
-
-  @WithActiveTokenOnly()
-  @Get(`/:month-:year`)
-  async getNotesByMonth(@Req() req: IAttachedUserRequest) {
-    const { user } = req;
-    return this.notesService.getNoteByMonth(user[`_id`], +req.params[`month`], +req.params[`year`]);
+  @Get(`note-report`)
+  async reportNote(
+    @Query() query: { startTime: string; toTime: string; type: ReportType },
+    @Req() req: IAttachedUserRequest,
+  ) {
+    return this.notesService.noteReport(query.startTime, query.toTime, req.user[`_id`]);
   }
 
   @WithActiveTokenOnly()

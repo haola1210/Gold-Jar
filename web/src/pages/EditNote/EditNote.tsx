@@ -16,7 +16,7 @@ import {
 } from '@interfaces/tag.type';
 import { getDetailById, updateNote } from '@services/note.service';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const EditNote = () => {
@@ -25,11 +25,7 @@ const EditNote = () => {
     subType: SpendingTagId.EXPENSE,
     amount: 0,
     unit: Currency.VND,
-    forDate: {
-      month: 0,
-      day: 0,
-      year: 0,
-    },
+    forDate: new Date(),
   });
   const [value, setValue] = useState('');
   const [description, setDescription] = useState(``);
@@ -38,6 +34,7 @@ const EditNote = () => {
   const [tag, changeTag] = useState<IncomeTag | SpendingTag | undefined>(undefined);
 
   const { id } = useParams();
+  const [params] = useSearchParams();
   const navigate = useNavigate();
 
   const handleCreateNote = async () => {
@@ -70,9 +67,7 @@ const EditNote = () => {
         const data = await updateNote(id ?? ``, payload);
         if (data) {
           toast('Cập nhật ghi chú thành công!');
-          navigate(
-            `/detail?day=${note.forDate.day}&month=${note.forDate.month}&year=${note.forDate.year}`,
-          );
+          navigate(`/detail?day=${params.get(`day`) ?? ``}`);
         }
       } catch (error) {
         toast('Có gì đó đang sai !');
@@ -164,11 +159,7 @@ const EditNote = () => {
           </button>
           <button
             className='inline-block py-2 px-4 bg-rose-500 font-bold text-white rounded-lg'
-            onClick={() =>
-              navigate(
-                `/detail?day=${note.forDate.day}&month=${note.forDate.month}&year=${note.forDate.year}`,
-              )
-            }
+            onClick={() => navigate(`/detail?day=${params.get(`day`) ?? ``}`)}
           >
             Trở lại
           </button>

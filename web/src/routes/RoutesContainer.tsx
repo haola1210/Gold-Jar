@@ -23,6 +23,7 @@ const pages = [
   'Welcome',
   'EditNote',
   'FeedbackAndRequest',
+  'Report',
 ];
 
 const Pages = pages.reduce<IPages>((P: IPages, p) => {
@@ -60,6 +61,10 @@ function RoutesContainer() {
           <Route
             path='/feedback'
             element={<Pages.FeedbackAndRequest />}
+          />
+          <Route
+            path='/report'
+            element={<Pages.Report />}
           />
         </Route>
 

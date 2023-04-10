@@ -1,12 +1,16 @@
 import Collapse, { Panel } from '@components/Collapse';
 import Layout from '@components/Layout';
 import { type MoneyNote } from '@interfaces/money.type';
-import { getDetail, deleteNote } from '@services/note.service';
+import { deleteNote, noteReport } from '@services/note.service';
+import * as dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import RecordBody from './components/RecordBody';
 import RecordHeader from './components/RecordHeader';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 const Detail = () => {
   const [params] = useSearchParams();
@@ -17,25 +21,22 @@ const Detail = () => {
   };
 
   useEffect(() => {
+    const date = dayjs(Number(params.get(`day`))).format('YYYY-MM-DD');
+    const dateUTC = dayjs.utc(date);
     (async () => {
-      const data = await getDetail(
-        params.get(`day`) ?? ``,
-        params.get(`month`) ?? ``,
-        params.get(`year`) ?? ``,
+      const data = await noteReport(
+        dateUTC.startOf(`day`).valueOf(),
+        dateUTC.endOf(`day`).valueOf(),
       );
-      setData(data?.data);
+      setData(data);
     })();
   }, []);
 
   const handleDeleteNote = async (id?: string) => {
     await deleteNote(id)
       .then(async () => {
-        const data = await getDetail(
-          params.get(`day`) ?? ``,
-          params.get(`month`) ?? ``,
-          params.get(`year`) ?? ``,
-        );
-        setData(data?.data);
+        const data = await noteReport(1000, 1000);
+        setData(data);
         toast(`Xoá thành công ghi chú!!!`);
       })
       .catch(() => {
@@ -50,9 +51,9 @@ const Detail = () => {
           <span className='px-4 py-2 bg-zinc-200 rounded-l-xl !pr-1'>
             Chi tiết thu nhập của ngày:
           </span>
-          <span className='px-4 py-2 rounded-r-xl bg-orange-400 !pl-1'>{`${
-            params.get(`day`) ?? ``
-          }-${params.get(`month`) ?? ``}-${params.get(`year`) ?? ``}`}</span>
+          <span className='px-4 py-2 rounded-r-xl bg-orange-400 !pl-1'>
+            {dayjs(Number(params.get(`day`))).format('DD-MM-YYYY')}
+          </span>
         </div>
         {/* ở đây là component collapse */}
         <div className='grow border-2 border-gray-400 rounded-lg bg-slate-200 p-1 overflow-y-auto'>
@@ -72,7 +73,9 @@ const Detail = () => {
               >
                 <RecordBody
                   detail={item.description ?? ``}
-                  onClickEdit={() => navigate(`/edit-note/${item?._id ?? ``}`)}
+                  onClickEdit={() =>
+                    navigate(`/edit-note/${item?._id ?? ``}?day=${params.get(`day`) ?? ``}`)
+                  }
                   onClickDelete={async () => handleDeleteNote(item?._id)}
                 />
               </Panel>
