@@ -22,10 +22,12 @@ const PieChart = ({ date }: IPieChartProps) => {
     const startOfDateMs = dayjs.utc(date).startOf('day').valueOf();
     const endOfDateMs = dayjs.utc(date).endOf('day').valueOf();
     (async () => {
-      const data = await noteReport(startOfDateMs, endOfDateMs, 'day');
+      const data = await noteReport(startOfDateMs, endOfDateMs);
       setDataOfDate(data);
     })();
   }, [date]);
+
+  console.log(dataOfDate);
 
   const spending = useMemo(() => {
     let totalSpending = 0;
@@ -47,18 +49,22 @@ const PieChart = ({ date }: IPieChartProps) => {
     return totalSpending;
   }, [dataOfDate]);
 
-  const data = {
-    labels: ['Thu', 'Chi'],
-    datasets: [
-      {
-        label: Currency.VND,
-        data: [spending, incoming],
-        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
-        borderWidth: 1,
-      },
-    ],
-  };
+  const data = useMemo(() => {
+    return {
+      labels: ['Thu', 'Chi'],
+      datasets: [
+        {
+          label: Currency.VND,
+          data: [spending, incoming],
+          backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+          borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+          borderWidth: 1,
+        },
+      ],
+    };
+  }, [spending, incoming]);
+  console.log(spending, incoming);
+  console.log('12321', data);
   return incoming + spending === 0 ? (
     <div>
       <div className='pb-2'>Ngày hôm nay không có thu chi gì!</div>

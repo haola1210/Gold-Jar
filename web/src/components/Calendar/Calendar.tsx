@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import * as dayjs from 'dayjs';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/outline';
-
 import { rangeWithKey } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
-import CalendarHeader from './components/CalendarHeader';
+import * as dayjs from 'dayjs';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import CalendarHeader from './components/CalendarHeader';
+import DateCell from './components/DateCell';
 import { legend, weekDays } from './consts';
 import { type ICalendar } from './types';
-import DateCell from './components/DateCell';
 
 const today = dayjs();
 
@@ -21,11 +20,9 @@ const today = dayjs();
  *
  * So we should memo this component.
  */
-function Calendar({ onChange, onChangeMonth, onChangeYear, renderInCellThisMonth }: ICalendar) {
+function Calendar({ onChange, renderInCellThisMonth, onChangeCurrentTime }: ICalendar) {
   const [day, setDay] = useState(() => dayjs());
   const [selectedDate, selectDate] = useState<dayjs.Dayjs | undefined>(() => day);
-  const [selectedMonth, setSelectedMonth] = useState<number>(day.month());
-  const [selectedYear, setSelectedYear] = useState<number>(day.year());
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,12 +32,8 @@ function Calendar({ onChange, onChangeMonth, onChangeYear, renderInCellThisMonth
   }, [selectedDate]);
 
   useEffect(() => {
-    onChangeMonth?.(selectedMonth);
-  }, [selectedMonth]);
-
-  useEffect(() => {
-    onChangeYear?.(selectedYear);
-  }, [selectedYear]);
+    onChangeCurrentTime?.(day);
+  }, [day]);
 
   //
   const thisYear = useMemo(() => day.year(), [day.year()]);
@@ -64,21 +57,9 @@ function Calendar({ onChange, onChangeMonth, onChangeYear, renderInCellThisMonth
     if (type === 'NEXT') {
       setDay(day.add(1, 'month'));
       selectDate(undefined);
-      if (selectedMonth === 11) {
-        setSelectedMonth(0);
-        setSelectedYear((prev) => ++prev);
-      } else {
-        setSelectedMonth((prev) => ++prev);
-      }
     } else if (type === 'BACK') {
       setDay(day.subtract(1, 'month'));
       selectDate(undefined);
-      if (selectedMonth === 0) {
-        setSelectedMonth(11);
-        setSelectedYear((prev) => --prev);
-      } else {
-        setSelectedMonth((prev) => --prev);
-      }
     }
   };
 
@@ -101,9 +82,7 @@ function Calendar({ onChange, onChangeMonth, onChangeYear, renderInCellThisMonth
     // console.log(selectedDate, dateObject, dateObject.isSame(selectedDate, 'date'));
     if (selectedDate && dateObject.isSame(selectedDate, 'date')) {
       //
-      navigateDetail(
-        `?day=${selectedDate.date()}&month=${selectedDate.month()}&year=${selectedDate.year()}`,
-      );
+      navigateDetail(`?day=${selectedDate.startOf(`day`).valueOf()}`);
     } else {
       selectDate(dateObject);
     }

@@ -7,30 +7,26 @@ export const chartType: Option[] = [
   },
   {
     value: 1,
-    label: 'ngày - ngày',
-  },
-  {
-    value: 2,
     label: '1 tháng gần đây',
   },
   {
-    value: 3,
+    value: 2,
     label: '3 tháng gần đây',
   },
   {
-    value: 4,
+    value: 3,
     label: '6 tháng gần đây',
   },
   {
-    value: 5,
+    value: 4,
     label: '1 năm',
   },
   {
-    value: 6,
+    value: 5,
     label: '2 năm',
   },
   {
-    value: 7,
+    value: 6,
     label: '3 năm',
   },
 ];

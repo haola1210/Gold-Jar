@@ -24,28 +24,12 @@ export class NotesController {
   constructor(private notesService: NotesService) {}
 
   @WithActiveTokenOnly()
-  @Get(``)
-  async getOneDayNotes(@Req() req: IAttachedUserRequest) {
-    const { day, month, year } = req.query;
-    const { user } = req;
-
-    return this.notesService.getNote(day as string, month as string, year as string, user[`_id`]);
-  }
-
-  @WithActiveTokenOnly()
   @Get(`note-report`)
   async reportNote(
     @Query() query: { startTime: string; toTime: string; type: ReportType },
     @Req() req: IAttachedUserRequest,
   ) {
-    return this.notesService.noteReport(query.startTime, query.toTime, req.user[`_id`], query.type);
-  }
-
-  @WithActiveTokenOnly()
-  @Get(`/:month-:year`)
-  async getNotesByMonth(@Req() req: IAttachedUserRequest) {
-    const { user } = req;
-    return this.notesService.getNoteByMonth(user[`_id`], +req.params[`month`], +req.params[`year`]);
+    return this.notesService.noteReport(query.startTime, query.toTime, req.user[`_id`]);
   }
 
   @WithActiveTokenOnly()

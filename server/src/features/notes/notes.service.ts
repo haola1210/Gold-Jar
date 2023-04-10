@@ -6,7 +6,6 @@ import { Note, NoteDocument } from 'src/schemas/note.schema';
 import createMoneyNoteDTO from './interfaces/createNote.dto';
 import updateMoneyNoteDTO from './interfaces/updateNote.dto';
 import * as moment from 'moment';
-import { ReportType } from 'src/constants/ReportTypeEnum';
 
 @Injectable()
 export class NotesService {
@@ -39,34 +38,12 @@ export class NotesService {
     }
   }
 
-  async getNote(day?: string, month?: string, year?: string, owner?: string) {
-    let noteList;
-
-    try {
-      if (day !== undefined && month !== undefined && year !== undefined) {
-        noteList = await this.noteModel.find({
-          'forDate.day': Number(day),
-          'forDate.month': Number(month),
-          'forDate.year': Number(year),
-          owner,
-        });
-      } else {
-        noteList = await this.noteModel.find().limit(10);
-      }
-      return noteList;
-    } catch (error) {
-      throw new BadRequestException();
-    }
-  }
-
   async deleteNote(id: string): Promise<DeleteResult> {
     try {
       if (id) {
-        console.log(id);
         const note = await this.noteModel.deleteOne({ _id: id });
         return note;
       }
-
       throw new BadRequestException();
     } catch (error) {
       throw new BadRequestException();
@@ -84,42 +61,28 @@ export class NotesService {
 
   async getNoteById(id: string) {
     try {
-      const note = await this.noteModel.find({ _id: id });
-      return note[0];
+      const note = await this.noteModel.findOne({ _id: id });
+      return note;
     } catch (error) {
       throw new BadRequestException();
     }
   }
 
-  async getNoteByMonth(id: string, month: number, year: number) {
+  async noteReport(startTime: string, toTime: string, owner: string) {
     try {
+      console.log('toTime', toTime);
+      console.log('startTime', startTime);
+      const startTimeConvert = moment.utc(+startTime);
+      const toTimeConvert = moment.utc(+toTime);
+      console.log({ startTimeConvert, toTimeConvert });
       const noteList = await this.noteModel.find({
-        owner: id,
-        'forDate.month': month,
-        'forDate.year': year,
+        forDate: {
+          $gte: startTimeConvert,
+          $lt: toTimeConvert,
+        },
+        owner: owner,
       });
       return noteList;
-    } catch (error) {
-      throw new BadRequestException();
-    }
-  }
-
-  async noteReport(startTime: string, toTime: string, owner: string, type: ReportType) {
-    try {
-      switch (type) {
-        case ReportType.DAY:
-          const day = moment(+startTime);
-          console.log(day.date(), day.month(), day.year());
-          const noteList = await this.noteModel.find({
-            'forDate.day': day.date(),
-            'forDate.month': day.month(),
-            'forDate.year': day.year(),
-            owner: owner,
-          });
-          return noteList;
-        default:
-          return ``;
-      }
     } catch (error) {
       throw error;
     }

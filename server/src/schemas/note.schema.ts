@@ -1,7 +1,6 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Currency, SubType, Type } from 'src/constants/MoneyTypeEnum';
-import { IForDate } from 'src/features/notes/interfaces/IForDate';
 
 export type NoteDocument = HydratedDocument<Note>;
 
@@ -38,15 +37,8 @@ export class Note {
   @Prop({ default: Date.now() })
   updatedAt: Date;
 
-  @Prop({
-    type: raw({
-      day: { type: Number },
-      month: { type: Number },
-      year: { type: Number },
-    }),
-    required: true,
-  })
-  forDate: IForDate;
+  @Prop({ required: true })
+  forDate: Date;
 
   @Prop()
   owner: string;

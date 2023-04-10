@@ -1,5 +1,4 @@
 import { type ActionType } from './action.type';
-import { type ForDate } from './forDate.type';
 import { type Currency, type IncomeTagId, type SpendingTagId } from './tag.type';
 
 export interface MoneyNote {
@@ -8,7 +7,7 @@ export interface MoneyNote {
   amount: number;
   description?: string;
   unit: Currency;
-  forDate: ForDate;
+  forDate: Date;
   _id?: string;
   updateAt?: Date;
   createAt?: Date;

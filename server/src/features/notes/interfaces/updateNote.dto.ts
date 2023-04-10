@@ -1,7 +1,6 @@
 import { Transform, TransformFnParams } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { Currency, SubType, Type } from 'src/constants/MoneyTypeEnum';
-import { IForDate } from './IForDate';
 
 export default class updateMoneyNoteDTO {
   @IsString()
@@ -26,6 +25,6 @@ export default class updateMoneyNoteDTO {
   @Transform(({ value }: TransformFnParams) => value?.trim())
   unit: Currency;
 
-  @IsObject()
-  forDate: IForDate;
+  @IsDate()
+  forDate: Date;
 }
