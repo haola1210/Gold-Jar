@@ -6,7 +6,7 @@ export interface ISelectProps {
   placeholder?: string;
   defaultValue?: string | number;
   className?: string;
-  onChange?: (value: string | number) => void;
+  onChange?: (value: string | number | any) => void;
   title?: ReactNode;
   value?: string | number;
 }
@@ -15,15 +15,15 @@ export type Option = { value: string | number; label: string; disabled?: boolean
 
 const Select = ({
   options = [],
-  defaultValue,
   className,
   placeholder = 'Select',
   onChange,
   title,
   value,
+  defaultValue,
 }: ISelectProps) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const [_value, setValue] = useState(defaultValue ?? 0);
+  const [_value, setValue] = useState<number | string>(defaultValue ?? ``);
   const [_label, setLabel] = useState(``);
 
   const handleOnClick = (value: number | string, label: string) => {
@@ -37,12 +37,17 @@ const Select = ({
   }, [_value]);
 
   useEffect(() => {
-    options.forEach((item) => {
-      if (item.value === value) {
-        setValue(item.value);
-        setLabel(item.label);
-      }
-    });
+    if (value === defaultValue) {
+      setValue(defaultValue ?? ``);
+      setLabel(``);
+    } else {
+      options.forEach((item) => {
+        if (item.value === value) {
+          setValue(item.value);
+          setLabel(item.label);
+        }
+      });
+    }
   }, [value]);
 
   return (
@@ -98,4 +103,4 @@ const Select = ({
   );
 };
 
-export default React.memo(Select);
+export default Select;

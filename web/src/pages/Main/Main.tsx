@@ -46,7 +46,7 @@ function Main() {
       );
       setPaymentList(data);
     })();
-  }, []);
+  }, [currentTime]);
 
   const [tag, changeTag] = useState<IncomeTag | SpendingTag | undefined>(undefined);
 
@@ -105,15 +105,25 @@ function Main() {
   }, []);
 
   const renderCellThisMonth = useCallback(
-    (value: number) => {
+    (day: number, month: number, year: number) => {
       let totalSpending = 0;
       paymentList.forEach((item) => {
-        if (dayjs.utc(item.forDate).date() === value + 1 && item.type === ActionType.SPENDING)
+        if (
+          dayjs.utc(item.forDate).date() === day + 1 &&
+          dayjs.utc(item.forDate).month() === month &&
+          dayjs.utc(item.forDate).year() === year &&
+          item.type === ActionType.SPENDING
+        )
           totalSpending += item.amount;
       });
       let totalIncoming = 0;
       paymentList.forEach((item) => {
-        if (dayjs.utc(item.forDate).date() === value + 1 && item.type === ActionType.INCOME)
+        if (
+          dayjs.utc(item.forDate).date() === day + 1 &&
+          dayjs.utc(item.forDate).month() === month &&
+          dayjs.utc(item.forDate).year() === year &&
+          item.type === ActionType.INCOME
+        )
           totalIncoming += item.amount;
       });
       return (
