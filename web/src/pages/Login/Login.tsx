@@ -146,6 +146,8 @@ const Login = () => {
                 width: '100px',
               }}
               onClick={renderProps.onClick}
+              disabled={true}
+              title='Under maintenance'
             >
               Facebook
             </Button>
@@ -157,6 +159,8 @@ const Login = () => {
           style={{
             width: '100px',
           }}
+          disabled={true}
+          title='developing'
         >
           Google
         </Button>
