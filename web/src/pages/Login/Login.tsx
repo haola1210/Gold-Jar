@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { type ReactFacebookLoginInfo } from 'react-facebook-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+const FB_APP_ID = import.meta.env.VITE_FB_APP_ID;
 
 const schema = Yup.object().shape({
   username: Yup.string()
@@ -59,10 +60,11 @@ const Login = () => {
 
   const handleResLoginFB = async (res: ReactFacebookLoginInfo) => {
     const user: ILoginWithFBUser = {
-      username: res.email ?? ``,
-      name: res.name ?? ``,
-      email: res.email ?? ``,
+      username: `FB_USER_${res.userID}`,
+      name: res.name ?? `FB_USER_${res.userID}`,
+      email: res.email ?? `FB_USER_${res.userID}`,
       linked_fb_userid: res.userID,
+      token: res.accessToken,
     };
     try {
       const { accessToken } = await loginWithFacebook(user);
@@ -131,7 +133,7 @@ const Login = () => {
           Đăng ký
         </Button>
         <FacebookLogin
-          appId='605772241438402'
+          appId={FB_APP_ID}
           fields='name,email,picture'
           callback={handleResLoginFB}
           isMobile

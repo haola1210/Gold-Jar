@@ -1,24 +1,26 @@
+import { applyDecorators } from '@nestjs/common';
 import { Transform, TransformFnParams } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
+const NotEmptyString = () =>
+  applyDecorators(
+    IsString(),
+    IsNotEmpty(),
+    Transform(({ value }: TransformFnParams) => value?.trim()),
+  );
 export class LoginWithFacebookDTO {
-  @IsString()
-  @IsNotEmpty()
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @NotEmptyString()
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @NotEmptyString()
   username: string;
 
-  @IsEmail()
-  @IsNotEmpty()
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @NotEmptyString()
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @NotEmptyString()
   linked_fb_userid: string;
+
+  @NotEmptyString()
+  token: string;
 }

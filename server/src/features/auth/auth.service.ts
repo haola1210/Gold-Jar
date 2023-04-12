@@ -20,10 +20,14 @@ export class AuthService {
   private ATSecret: string;
   private RTSecret: string;
   private CKPath: string;
+  private FBAppId: string;
+  private FBAppSecret: string;
   constructor(private usersService: UsersService, private configService: ConfigService) {
     this.ATSecret = this.configService.get('AT_SECRET');
     this.RTSecret = this.configService.get('RT_SECRET');
     this.CKPath = this.configService.get('CK_PATH');
+    this.FBAppId = this.configService.get('FB_APP_ID');
+    this.FBAppSecret = this.configService.get('FB_APP_SECRET');
   }
 
   async generateTokens(data: ITokenPayload) {
@@ -191,6 +195,7 @@ export class AuthService {
         loginWithFacebookDTO.linked_fb_userid,
       );
 
+      // did user logged in before?
       if (userFoundByLinkedFB) {
         const { accessToken, refreshToken } = await this.generateTokens({
           _id: userFoundByLinkedFB._id,
@@ -206,6 +211,8 @@ export class AuthService {
         const userFoundByEmail = await this.usersService.findUserByEmail(
           loginWithFacebookDTO.email,
         );
+
+        // is there any user with this mail?
         if (userFoundByEmail) {
           const user = await this.usersService.findAndUpdateLinkedFB(
             `${userFoundByEmail._id}`,

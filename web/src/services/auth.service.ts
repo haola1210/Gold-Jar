@@ -17,6 +17,8 @@ export const login = async (user: ILoginUser) => {
 };
 
 export const loginWithFacebook = async (user: ILoginWithFBUser) => {
-  const { data } = await publicInstance.post('/auth/login-with-facebook', user);
-  return data as IAuthRes;
+  console.log(user);
+  throw new Error('error');
+  // Const { data } = await publicInstance.post('/auth/login-with-facebook', user);
+  // return data as IAuthRes;
 };

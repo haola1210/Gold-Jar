@@ -19,4 +19,5 @@ export interface ILoginWithFBUser {
   email: string;
   name: string;
   linked_fb_userid: string;
+  token: string;
 }
