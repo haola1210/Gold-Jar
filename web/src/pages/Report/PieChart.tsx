@@ -7,27 +7,25 @@ import { Pie } from 'react-chartjs-2';
 import utc from 'dayjs/plugin/utc';
 import { ActionType } from '@interfaces/action.type';
 import { Currency } from '@interfaces/tag.type';
+import DatePicker from '@components/DatePicker';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-interface IPieChartProps {
-  date?: Date | null;
-}
-
 dayjs.extend(utc);
 
-const PieChart = ({ date }: IPieChartProps) => {
+const PieChart = () => {
   const [dataOfDate, setDataOfDate] = useState<MoneyNote[]>();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
   useEffect(() => {
-    const startOfDateMs = dayjs.utc(date).startOf('day').valueOf();
-    const endOfDateMs = dayjs.utc(date).endOf('day').valueOf();
+    console.log('selectedDate', selectedDate);
+    const startOfDateMs = dayjs.utc(selectedDate).startOf('day').valueOf();
+    const endOfDateMs = dayjs.utc(selectedDate).endOf('day').valueOf();
     (async () => {
       const data = await noteReport(startOfDateMs, endOfDateMs);
       setDataOfDate(data);
     })();
-  }, [date]);
-
-  console.log(dataOfDate);
+  }, [selectedDate]);
 
   const spending = useMemo(() => {
     let totalSpending = 0;
@@ -63,15 +61,29 @@ const PieChart = ({ date }: IPieChartProps) => {
       ],
     };
   }, [spending, incoming]);
-  console.log(spending, incoming);
-  console.log('12321', data);
-  return incoming + spending === 0 ? (
-    <div>
-      <div className='pb-2'>Ngày hôm nay không có thu chi gì!</div>
-      <div>Vui lòng chọn ngày khác!</div>
-    </div>
-  ) : (
-    <Pie data={data} />
+
+  return (
+    <>
+      <div className='mr-5'>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(value) => {
+            setSelectedDate(value);
+          }}
+          label={'Chọn ngày'}
+        />
+      </div>{' '}
+      {incoming + spending === 0 ? (
+        <div>
+          <div className='pb-2'>Ngày hôm nay không có thu chi gì!</div>
+          <div>Vui lòng chọn ngày khác!</div>
+        </div>
+      ) : (
+        <>
+          <Pie data={data} />
+        </>
+      )}
+    </>
   );
 };
 

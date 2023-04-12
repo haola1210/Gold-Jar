@@ -184,7 +184,7 @@ function Calendar({ onChange, renderInCellThisMonth, onChangeCurrentTime }: ICal
                 }`}
                 onClick={() => handleSelectDate(value + 1, thisMonth + 1)}
                 date={value + 1}
-                belowUI={renderInCellThisMonth(value)}
+                belowUI={renderInCellThisMonth(value, thisMonth, thisYear)}
               />
             );
           })}

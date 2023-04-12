@@ -5,7 +5,7 @@ import { type weekDays } from './consts';
 export interface ICalendar {
   onChange?: (_value: dayjs.Dayjs | undefined) => void;
   onChangeMonth?: (_value: number) => void;
-  renderInCellThisMonth: (value: number) => ReactNode;
+  renderInCellThisMonth: (day: number, month: number, year: number) => ReactNode;
   onChangeCurrentTime?: (_value: dayjs.Dayjs) => void;
 }
 
