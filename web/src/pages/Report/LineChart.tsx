@@ -21,6 +21,7 @@ import { type MoneyNote } from '@interfaces/money.type';
 import { ActionType } from '@interfaces/action.type';
 import weekOfYear from 'dayjs/plugin/weekOfYear'; // Import the weekOfYear plugin
 import isBetween from 'dayjs/plugin/isBetween';
+import Export from './Export';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -660,6 +661,7 @@ const LineChart = ({ chart }: ILineChartProps) => {
         <div className='my-10 text-red-800'>Vui lòng chọn khoảng</div>
       ) : (
         <div className='mt-10'>
+          <Export data={dataChart} />
           <Line
             options={options}
             data={data()}
