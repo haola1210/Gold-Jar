@@ -5,9 +5,9 @@ import Select from '@components/Select';
 import { CHART, chartType } from '@consts/chart-type';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PieChart from './PieChart';
 
 const LineChart = React.lazy(async () => import('./LineChart'));
+const PieChart = React.lazy(async () => import('./PieChart'));
 
 const Report = () => {
   const [chart, setChart] = useState<CHART>(CHART.DAY);

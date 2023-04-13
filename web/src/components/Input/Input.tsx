@@ -12,6 +12,7 @@ const Input = ({
   onChange,
   className,
   value,
+  ...rest
 }: IInputProps) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const returnType = () => {
@@ -40,6 +41,7 @@ const Input = ({
           onChange={onChange}
           placeholder={placeholder}
           value={value}
+          {...rest}
         />
         {type === 'password' && (
           <>

@@ -1,17 +1,36 @@
 import ReactDatePicker, { type ReactDatePickerProps } from 'react-datepicker';
-import { DatePickerWrapper } from './styled';
 import 'react-datepicker/dist/react-datepicker.css';
-import { type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
+import Input from '@components/Input';
 
 interface IDatePickerProps extends ReactDatePickerProps {
   label?: ReactNode;
 }
+
+interface IInputDatePickerProps {
+  value?: string;
+  onClick?: React.MouseEventHandler<HTMLInputElement>;
+}
 const DatePicker = ({ label, ...rest }: IDatePickerProps) => {
+  const CustomInput = React.forwardRef(
+    ({ value, onClick }: IInputDatePickerProps, ref: React.LegacyRef<HTMLInputElement>) => (
+      <Input
+        onClick={onClick}
+        ref={ref}
+        value={value}
+      ></Input>
+    ),
+  );
+
   return (
-    <DatePickerWrapper>
+    <div>
       {label && <div className='mb-1'>{label}</div>}
-      <ReactDatePicker {...rest} />
-    </DatePickerWrapper>
+      <ReactDatePicker
+        dateFormat={'dd/MM/yyyy'}
+        customInput={<CustomInput />}
+        {...rest}
+      />
+    </div>
   );
 };
 
