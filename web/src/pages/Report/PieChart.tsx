@@ -8,17 +8,17 @@ import utc from 'dayjs/plugin/utc';
 import { ActionType } from '@interfaces/action.type';
 import { Currency } from '@interfaces/tag.type';
 import DatePicker from '@components/DatePicker';
+import Export from './Export';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 dayjs.extend(utc);
 
 const PieChart = () => {
-  const [dataOfDate, setDataOfDate] = useState<MoneyNote[]>();
+  const [dataOfDate, setDataOfDate] = useState<MoneyNote[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   useEffect(() => {
-    console.log('selectedDate', selectedDate);
     const startOfDateMs = dayjs.utc(selectedDate).startOf('day').valueOf();
     const endOfDateMs = dayjs.utc(selectedDate).endOf('day').valueOf();
     (async () => {
@@ -54,8 +54,8 @@ const PieChart = () => {
         {
           label: Currency.VND,
           data: [spending, incoming],
-          backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
-          borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+          backgroundColor: ['rgb(74 222 128)', 'rgb(248 113 113)'],
+          borderColor: ['rgb(220 252 231)', 'rgb(254 226 226)'],
           borderWidth: 1,
         },
       ],
@@ -80,6 +80,7 @@ const PieChart = () => {
         </div>
       ) : (
         <>
+          <Export data={dataOfDate} />
           <Pie data={data} />
         </>
       )}
