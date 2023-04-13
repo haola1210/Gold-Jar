@@ -658,7 +658,7 @@ const LineChart = ({ chart }: ILineChartProps) => {
         />
       </div>
       {option === `` ? (
-        <div className='my-10 text-red-800'>Vui lòng chọn khoảng</div>
+        <div className='my-10 text-red-800'>Vui lòng chọn loại biểu đồ</div>
       ) : (
         <div className='mt-10'>
           <Export data={dataChart} />
