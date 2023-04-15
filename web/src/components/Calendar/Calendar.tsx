@@ -3,7 +3,7 @@ import { rangeWithKey } from '@utils/range';
 import { shalowCompareArray } from '@utils/shalowCompareArray';
 import * as dayjs from 'dayjs';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import CalendarHeader from './components/CalendarHeader';
 import DateCell from './components/DateCell';
 import { legend, weekDays } from './consts';
@@ -23,6 +23,7 @@ const today = dayjs();
 function Calendar({ onChange, renderInCellThisMonth, onChangeCurrentTime }: ICalendar) {
   const [day, setDay] = useState(() => dayjs());
   const [selectedDate, selectDate] = useState<dayjs.Dayjs | undefined>(() => day);
+  const [param] = useSearchParams();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,6 +35,13 @@ function Calendar({ onChange, renderInCellThisMonth, onChangeCurrentTime }: ICal
   useEffect(() => {
     onChangeCurrentTime?.(day);
   }, [day]);
+
+  useEffect(() => {
+    if (Number(param.get(`day`))) {
+      selectDate(dayjs(Number(param.get(`day`))));
+      setDay(dayjs(Number(param.get(`day`))));
+    }
+  }, [param.get(`day`)]);
 
   //
   const thisYear = useMemo(() => day.year(), [day.year()]);

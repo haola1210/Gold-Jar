@@ -17,7 +17,7 @@ const Detail = () => {
   const [data, setData] = useState<MoneyNote[]>([]);
   const navigate = useNavigate();
   const handleGoHome = () => {
-    navigate(localStorage.getItem(`oldPath`) ?? ``);
+    navigate(`${localStorage.getItem(`oldPath`) ?? ``}?day=${Number(params.get(`day`))}`);
   };
 
   useEffect(() => {
