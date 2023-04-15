@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const UserDetail = () => {
   const navigate = useNavigate();
   const { user } = useAuthContext();
+  console.log(user);
   return (
     <Layout>
       <div style={{ padding: '24px 5px' }}>
@@ -25,7 +26,7 @@ const UserDetail = () => {
               className='block py-2 px-4 bg-green-600 font-bold text-white rounded-lg'
               onClick={() => navigate('/change-user-info')}
             >
-              Đổi thông tin
+              Đổi tên
             </Button>
             <Button
               className='block py-2 px-4 bg-green-600 font-bold text-white rounded-lg'

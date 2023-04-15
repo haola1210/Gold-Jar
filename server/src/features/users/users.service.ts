@@ -5,6 +5,7 @@ import {
   NotFoundException,
   CACHE_MANAGER,
   Inject,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -129,6 +130,43 @@ export class UsersService {
     try {
       const FbUser = await this.userModel.findOne({ linked_fb_userid: linkedFbUserid });
       return FbUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateNameOfUser(id: string, name: string) {
+    try {
+      const user = await this.userModel.findByIdAndUpdate(id, { name }, { new: true });
+      if (user) {
+        await this.cacheManager.set(`USER_ID_${id}`, user);
+        return user;
+      } else {
+        throw new InternalServerErrorException();
+      }
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
+
+  async updatePasswordOfUser(id: string, oldPass: string, newPass: string) {
+    try {
+      const salt = await bcrypt.genSalt();
+
+      const user = await this.userModel.findOne({ _id: id });
+      // const compare = await bcrypt.compare(password, user.password);
+
+      if (await bcrypt.compare(oldPass, user.password)) {
+        if (await bcrypt.compare(newPass, user.password)) {
+          throw new ConflictException();
+        }
+        const hashedNewPassword = await bcrypt.hash(newPass, salt);
+
+        const newUser = await this.userModel.findByIdAndUpdate(id, { password: hashedNewPassword });
+        return newUser;
+      } else {
+        throw new NotFoundException('Wrong old password');
+      }
     } catch (error) {
       throw error;
     }
