@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl =
+  import.meta.env.VITE_APP_MODE === 'dev'
+    ? import.meta.env.VITE_API_URL_DEV
+    : import.meta.env.VITE_API_URL;
 
 export const publicInstance = axios.create({
   baseURL: apiUrl,

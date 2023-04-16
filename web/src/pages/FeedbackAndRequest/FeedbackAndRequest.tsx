@@ -30,7 +30,7 @@ const FeedbackAndRequest = () => {
           </ol>
           <br />
           <p>
-            Liên hệ ngay: <span className='text-green-400 '>daxua@gmail.com</span>
+            Liên hệ ngay: <span className='text-green-400 '>haola1210@gmail.com</span>
           </p>
         </div>
         <div className='text-right mt-4 mr-2'>

@@ -32,7 +32,7 @@ const SideBar = () => {
   const auth = useAuthContext();
 
   return (
-    <div className='h-screen w-screen flex'>
+    <div className='h-screen max-w-2xl flex'>
       {/* left (content) */}
       <div className='px-4 py-5 bg-zinc-50 flex flex-col'>
         <div className='mb-16'>

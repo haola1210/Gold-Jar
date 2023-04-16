@@ -25,12 +25,10 @@ import { NotesModule } from './features/notes/notes.module';
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       useFactory: async (config: ConfigService) => {
-        console.log(config.get('REDIS_PWD'));
-        console.log(config.get('REDIS_HOST'));
-        console.log(config.get('REDIS_PORT'));
         return {
           store: redisStore,
-          host: config.get('REDIS_HOST'),
+          host:
+            config.get('MODE') === 'dev' ? config.get('REDIS_HOST_DEV') : config.get('REDIS_HOST'),
           port: Number(config.get('REDIS_PORT')),
           password: config.get('REDIS_PWD'),
           ttl: null,
@@ -42,7 +40,10 @@ import { NotesModule } from './features/notes/notes.module';
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
-        uri: config.get<string>('MONGODB_URI'), // Loaded from .ENV
+        uri:
+          config.get('MODE') === 'dev'
+            ? config.get<string>('MONGODB_URI_DEV')
+            : config.get<string>('MONGODB_URI'),
       }),
     }),
     //

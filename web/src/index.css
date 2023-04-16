@@ -2,16 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(120, 181, 255)
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(96, 165, 250)
+}
+
 body {
-  @apply w-screen h-screen;
+  @apply w-screen h-screen bg-gray-900;
   max-width: 100vw;
   max-height: 100vh;
 }
 
+#container {
+  @apply h-full w-full max-w-2xl relative mx-auto bg-white;
+}
+
 #root {
-  @apply h-full w-full relative;
+  @apply h-full w-full;
 }
 
 #header-menu {
-  @apply absolute top-0 left-0;
+  @apply w-full absolute top-0 left-0;
 }
