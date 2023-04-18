@@ -1,3 +1,4 @@
+import Loading from '@components/Loading';
 import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
@@ -42,7 +43,7 @@ const Pages = pages.reduce<IPages>((P: IPages, p) => {
  */
 function RoutesContainer() {
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route

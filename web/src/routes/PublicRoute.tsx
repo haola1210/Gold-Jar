@@ -1,3 +1,4 @@
+import Loading from '@components/Loading';
 import { useAuthContext } from '@contexts/AuthContext';
 import { me } from '@services/user.service';
 import { Suspense } from 'react';
@@ -17,7 +18,7 @@ const LazySession = () => {
   };
 
   return (
-    <Suspense fallback={<>loading...</>}>
+    <Suspense fallback={<Loading />}>
       <Await
         resolve={lazyQuerySession()}
         errorElement={<Outlet />}

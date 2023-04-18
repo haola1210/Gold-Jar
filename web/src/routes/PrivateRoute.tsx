@@ -1,3 +1,4 @@
+import Loading from '@components/Loading';
 import { useAuthContext } from '@contexts/AuthContext';
 import { me } from '@services/user.service';
 import { useEffect } from 'react';
@@ -24,7 +25,7 @@ const PrivateRoute = () => {
     })();
   }, [auth]);
 
-  return auth.user ? <Outlet /> : <>Loading ...</>;
+  return auth.user ? <Outlet /> : <Loading />;
 };
 
 export default PrivateRoute;
